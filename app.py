@@ -5,17 +5,9 @@ from datetime import datetime
 
 st.set_page_config(page_title="Inventory Production Manager", layout="wide")
 
-# DATABASE CONNECTION
+# DATABASE
 conn = sqlite3.connect("inventory.db", check_same_thread=False)
 cursor = conn.cursor()
-
-if st.sidebar.button("Reset Database"):
-    cursor.execute("DROP TABLE IF EXISTS parts")
-    cursor.execute("DROP TABLE IF EXISTS products")
-    cursor.execute("DROP TABLE IF EXISTS bom")
-    cursor.execute("DROP TABLE IF EXISTS production_history")
-    conn.commit()
-    st.success("Database reset. Refresh the page.")
 
 # CREATE TABLES
 cursor.execute("""
@@ -36,6 +28,7 @@ name TEXT UNIQUE
 
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS bom(
+id INTEGER PRIMARY KEY AUTOINCREMENT,
 product_id INTEGER,
 part_id INTEGER,
 qty INTEGER
@@ -43,7 +36,8 @@ qty INTEGER
 """)
 
 cursor.execute("""
-CREATE TABLE IF NOT EXISTS production_history(
+CREATE TABLE IF NOT EXISTS production(
+id INTEGER PRIMARY KEY AUTOINCREMENT,
 product TEXT,
 qty INTEGER,
 time TEXT
@@ -61,18 +55,17 @@ menu = st.sidebar.radio(
 "Add Stock",
 "Create Product",
 "Record Production",
-"Inventory Dashboard",
-"Production History"
+"Inventory Dashboard"
 ]
 )
 
-# -----------------------
+# -------------------------
 # ADD PARTS
-# -----------------------
+# -------------------------
 
 if menu == "Add Parts":
 
-    st.header("Add New Part")
+    st.header("Add Part")
 
     name = st.text_input("Part Name")
     stock = st.number_input("Initial Stock", min_value=0)
@@ -91,36 +84,36 @@ if menu == "Add Parts":
                     (name,stock,alert)
                 )
                 conn.commit()
-
                 st.success("Part added")
 
             except:
                 st.error("Part already exists")
 
-    parts = pd.read_sql("SELECT name,stock,alert FROM parts", conn)
+    parts = pd.read_sql("SELECT name,stock,alert FROM parts",conn)
     st.dataframe(parts,use_container_width=True)
 
-# -----------------------
+
+# -------------------------
 # ADD STOCK
-# -----------------------
+# -------------------------
 
 if menu == "Add Stock":
 
     st.header("Add Stock")
 
-    parts = pd.read_sql("SELECT * FROM parts", conn)
+    parts = pd.read_sql("SELECT * FROM parts",conn)
 
     if len(parts) == 0:
         st.warning("Add parts first")
 
     else:
 
-        part = st.selectbox("Select Part", parts["name"])
-        qty = st.number_input("Quantity to Add", min_value=1)
+        part = st.selectbox("Part",parts["name"])
+        qty = st.number_input("Quantity",min_value=1)
 
-        if st.button("Add Stock"):
+        if st.button("Update Stock"):
 
-            part_id = parts.loc[parts["name"] == part,"id"].values[0]
+            part_id = parts.loc[parts["name"]==part,"id"].values[0]
 
             cursor.execute(
                 "UPDATE parts SET stock = stock + ? WHERE id=?",
@@ -131,12 +124,13 @@ if menu == "Add Stock":
 
             st.success("Stock updated")
 
-    updated = pd.read_sql("SELECT name,stock FROM parts", conn)
+    updated = pd.read_sql("SELECT name,stock FROM parts",conn)
     st.dataframe(updated,use_container_width=True)
 
-# -----------------------
+
+# -------------------------
 # CREATE PRODUCT
-# -----------------------
+# -------------------------
 
 if menu == "Create Product":
 
@@ -144,37 +138,34 @@ if menu == "Create Product":
 
     product_name = st.text_input("Product Name")
 
-    parts = pd.read_sql("SELECT * FROM parts", conn)
+    parts = pd.read_sql("SELECT * FROM parts",conn)
 
     if "product_parts" not in st.session_state:
         st.session_state.product_parts = []
 
-    col1, col2 = st.columns(2)
-
-    with col1:
-        part = st.selectbox("Select Part", parts["name"])
-
-    with col2:
-        qty = st.number_input("Quantity Required", min_value=1)
+    part = st.selectbox("Part",parts["name"])
+    qty = st.number_input("Quantity Needed",min_value=1)
 
     if st.button("Add Part"):
 
-        part_id = parts.loc[parts["name"] == part, "id"].values[0]
+        part_id = parts.loc[parts["name"]==part,"id"].values[0]
 
-        st.session_state.product_parts.append(
-            {"part": part, "part_id": part_id, "qty": qty}
-        )
+        st.session_state.product_parts.append({
+            "name":part,
+            "id":part_id,
+            "qty":qty
+        })
 
-    st.subheader("Parts In Product")
+    st.subheader("Parts in Product")
 
-    for i, item in enumerate(st.session_state.product_parts):
+    for i,p in enumerate(st.session_state.product_parts):
 
-        col1, col2, col3 = st.columns([3,1,1])
+        col1,col2,col3 = st.columns([4,2,1])
 
-        col1.write(item["part"])
-        col2.write(item["qty"])
+        col1.write(p["name"])
+        col2.write(p["qty"])
 
-        if col3.button("Remove", key=i):
+        if col3.button("Remove",key=i):
             st.session_state.product_parts.pop(i)
             st.rerun()
 
@@ -183,8 +174,8 @@ if menu == "Create Product":
         if product_name == "":
             st.error("Enter product name")
 
-        elif len(st.session_state.product_parts) == 0:
-            st.error("Add at least one part")
+        elif len(st.session_state.product_parts)==0:
+            st.error("Add parts first")
 
         else:
 
@@ -193,9 +184,7 @@ if menu == "Create Product":
                 (product_name,)
             )
 
-            existing = cursor.fetchone()
-
-            if existing:
+            if cursor.fetchone():
                 st.error("Product already exists")
 
             else:
@@ -209,57 +198,58 @@ if menu == "Create Product":
 
                 product_id = cursor.lastrowid
 
-                for item in st.session_state.product_parts:
+                for p in st.session_state.product_parts:
 
                     cursor.execute(
                         "INSERT INTO bom(product_id,part_id,qty) VALUES(?,?,?)",
-                        (product_id, item["part_id"], item["qty"])
+                        (product_id,p["id"],p["qty"])
                     )
 
                 conn.commit()
 
-                st.session_state.product_parts = []
+                st.session_state.product_parts=[]
 
                 st.success("Product saved")
 
-# -----------------------
+
+# -------------------------
 # RECORD PRODUCTION
-# -----------------------
+# -------------------------
 
 if menu == "Record Production":
 
     st.header("Record Production")
 
-    products = pd.read_sql("SELECT * FROM products", conn)
+    products = pd.read_sql("SELECT * FROM products",conn)
 
-    if len(products) == 0:
+    if len(products)==0:
 
         st.warning("Create product first")
 
     else:
 
-        product = st.selectbox("Product", products["name"])
-        qty = st.number_input("Quantity Produced", min_value=1)
+        product = st.selectbox("Product",products["name"])
+        qty = st.number_input("Quantity Produced",min_value=1)
 
         if st.button("Run Production"):
 
             product_id = products.loc[
-                products["name"] == product, "id"
+                products["name"]==product,"id"
             ].values[0]
 
             bom = pd.read_sql(
-                "SELECT part_id, qty FROM bom WHERE product_id=?",
+                "SELECT * FROM bom WHERE product_id=?",
                 conn,
                 params=(product_id,)
             )
 
-            if len(bom) == 0:
-                st.error("No parts defined for this product")
+            if len(bom)==0:
+                st.error("No parts defined")
                 st.stop()
 
-            for _, row in bom.iterrows():
+            for _,row in bom.iterrows():
 
-                required = int(row["qty"]) * qty
+                required = row["qty"] * qty
 
                 stock = pd.read_sql(
                     "SELECT stock FROM parts WHERE id=?",
@@ -268,33 +258,33 @@ if menu == "Record Production":
                 )["stock"].values[0]
 
                 if stock < required:
-
-                    st.error("Not enough inventory to run production")
+                    st.error("Not enough inventory")
                     st.stop()
 
-            for _, row in bom.iterrows():
+            for _,row in bom.iterrows():
 
-                required = int(row["qty"]) * qty
+                required = row["qty"] * qty
 
                 cursor.execute(
                     "UPDATE parts SET stock = stock - ? WHERE id=?",
-                    (required, row["part_id"])
+                    (required,row["part_id"])
                 )
 
             conn.commit()
 
             cursor.execute(
-                "INSERT INTO production_history VALUES(?,?,?)",
-                (product, qty, datetime.now().strftime("%Y-%m-%d %H:%M"))
+                "INSERT INTO production(product,qty,time) VALUES(?,?,?)",
+                (product,qty,datetime.now().strftime("%Y-%m-%d %H:%M"))
             )
 
             conn.commit()
 
-            st.success("Production completed")
+            st.success("Production recorded")
 
-# -----------------------
-# INVENTORY
-# -----------------------
+
+# -------------------------
+# INVENTORY DASHBOARD
+# -------------------------
 
 if menu == "Inventory Dashboard":
 
@@ -307,29 +297,13 @@ if menu == "Inventory Dashboard":
 
     st.dataframe(parts,use_container_width=True)
 
-    st.subheader("Low Stock")
+    st.subheader("Low Stock Alerts")
 
     low = parts[parts["Stock"] <= parts["Alert_Level"]]
 
-    if len(low) == 0:
-        st.success("All inventory levels OK")
+    if len(low)==0:
+        st.success("All inventory healthy")
 
     else:
-        for _,row in low.iterrows():
-            st.error(f"{row['Part']} LOW STOCK ({row['Stock']})")
-
-# -----------------------
-# PRODUCTION HISTORY
-# -----------------------
-
-if menu == "Production History":
-
-    st.header("Production History")
-
-    history = pd.read_sql("SELECT * FROM production_history", conn)
-
-    if len(history) == 0:
-        st.info("No production records yet")
-
-    else:
-        st.dataframe(history,use_container_width=True)
+        for _,r in low.iterrows():
+            st.error(f"{r['Part']} LOW STOCK ({r['Stock']})")
