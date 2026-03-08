@@ -29,7 +29,8 @@ menu = st.sidebar.radio(
         "Add Stock",
         "Create Product",
         "Run Production",
-        "Inventory"
+        "Inventory",
+        "Production History"
     ]
 )
 
@@ -180,9 +181,12 @@ if menu == "Run Production":
 
             bom = st.session_state.products[product]
 
+            from datetime import datetime
+
             production_record = {
                 "product": product,
                 "qty": qty,
+                "time": datetime.now().strftime("%Y-%m-%d %H:%M"),
                 "parts_used": []
             }
 
@@ -288,3 +292,31 @@ if menu == "Inventory":
                     p["stock"] = new_stock
 
             st.success("Inventory updated")
+
+# -----------------------
+# PRODUCTION HISTORY
+# -----------------------
+
+if menu == "Production History":
+
+    st.header("Production History")
+
+    if len(st.session_state.production_log) == 0:
+
+        st.info("No production recorded yet")
+
+    else:
+
+        history = []
+
+        for item in st.session_state.production_log:
+
+            history.append({
+                "Product": item["product"],
+                "Quantity": item["qty"],
+                "Time": item["time"]
+            })
+
+        df = pd.DataFrame(history)
+
+        st.dataframe(df, use_container_width=True)
