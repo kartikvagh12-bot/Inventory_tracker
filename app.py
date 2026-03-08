@@ -1,13 +1,13 @@
 import streamlit as st
 import pandas as pd
 
-st.set_page_config(page_title="Inventory Production Manager", layout="wide")
+st.set_page_config(page_title="Production & Inventory Manager", layout="wide")
 
 st.title("🏭 Production & Inventory Manager")
 
-# ---------------------------
+# -----------------------
 # SESSION STORAGE
-# ---------------------------
+# -----------------------
 
 if "parts" not in st.session_state:
     st.session_state.parts = []
@@ -15,14 +15,17 @@ if "parts" not in st.session_state:
 if "products" not in st.session_state:
     st.session_state.products = {}
 
-# ---------------------------
+if "production_log" not in st.session_state:
+    st.session_state.production_log = []
+
+# -----------------------
 # MENU
-# ---------------------------
+# -----------------------
 
 menu = st.sidebar.radio(
     "Menu",
     [
-        "Add Part",
+        "Add Parts",
         "Add Stock",
         "Create Product",
         "Run Production",
@@ -30,32 +33,62 @@ menu = st.sidebar.radio(
     ]
 )
 
-# ---------------------------
-# ADD PART
-# ---------------------------
+# -----------------------
+# ADD PARTS
+# -----------------------
 
-if menu == "Add Part":
+if menu == "Add Parts":
+
+    st.header("Add Part")
 
     name = st.text_input("Part Name")
     stock = st.number_input("Initial Stock", min_value=0)
+    alert = st.number_input("Low Stock Alert Level", min_value=0)
 
     if st.button("Add Part"):
 
-        st.session_state.parts.append({
-            "name": name,
-            "stock": stock
-        })
+        if name == "":
+            st.error("Enter part name")
 
-        st.success("Part added")
+        else:
 
-# ---------------------------
+            for p in st.session_state.parts:
+                if p["name"] == name:
+                    st.error("Part already exists")
+                    st.stop()
+
+            st.session_state.parts.append({
+                "name": name,
+                "stock": stock,
+                "alert": alert
+            })
+
+            st.success("Part added")
+
+    st.subheader("Current Parts")
+
+    for i, part in enumerate(st.session_state.parts):
+
+        col1, col2, col3, col4 = st.columns([3,2,2,1])
+
+        col1.write(part["name"])
+        col2.write(f"Stock: {part['stock']}")
+        col3.write(f"Alert: {part['alert']}")
+
+        if col4.button("Delete", key=f"del_part_{i}"):
+
+            st.session_state.parts.pop(i)
+            st.rerun()
+
+# -----------------------
 # ADD STOCK
-# ---------------------------
+# -----------------------
 
 if menu == "Add Stock":
 
-    if len(st.session_state.parts) == 0:
+    st.header("Add Stock")
 
+    if len(st.session_state.parts) == 0:
         st.warning("Add parts first")
 
     else:
@@ -66,25 +99,25 @@ if menu == "Add Stock":
 
         qty = st.number_input("Quantity to Add", min_value=1)
 
-        if st.button("Update Stock"):
+        if st.button("Add Stock"):
 
             for p in st.session_state.parts:
-
                 if p["name"] == selected:
                     p["stock"] += qty
 
             st.success("Stock updated")
 
-# ---------------------------
+# -----------------------
 # CREATE PRODUCT
-# ---------------------------
+# -----------------------
 
 if menu == "Create Product":
+
+    st.header("Create Product")
 
     product_name = st.text_input("Product Name")
 
     if len(st.session_state.parts) == 0:
-
         st.warning("Add parts first")
 
     else:
@@ -109,17 +142,30 @@ if menu == "Create Product":
 
             st.subheader("Parts in Product")
 
-            st.table(st.session_state.products[product_name])
+            bom = st.session_state.products[product_name]
 
-# ---------------------------
+            for i, item in enumerate(bom):
+
+                col1, col2, col3 = st.columns([3,2,1])
+
+                col1.write(item["part"])
+                col2.write(item["qty"])
+
+                if col3.button("Remove", key=f"remove_{i}"):
+
+                    st.session_state.products[product_name].pop(i)
+                    st.rerun()
+
+# -----------------------
 # RUN PRODUCTION
-# ---------------------------
+# -----------------------
 
 if menu == "Run Production":
 
-    if len(st.session_state.products) == 0:
+    st.header("Run Production")
 
-        st.warning("Create a product first")
+    if len(st.session_state.products) == 0:
+        st.warning("Create product first")
 
     else:
 
@@ -134,6 +180,13 @@ if menu == "Run Production":
 
             bom = st.session_state.products[product]
 
+            production_record = {
+                "product": product,
+                "qty": qty,
+                "parts_used": []
+            }
+
+            # Check stock
             for item in bom:
 
                 part_name = item["part"]
@@ -145,11 +198,10 @@ if menu == "Run Production":
 
                         if p["stock"] < required:
 
-                            st.error(
-                                f"Not enough {part_name}"
-                            )
+                            st.error(f"Not enough {part_name}")
                             st.stop()
 
+            # Deduct stock
             for item in bom:
 
                 part_name = item["part"]
@@ -158,15 +210,45 @@ if menu == "Run Production":
                 for p in st.session_state.parts:
 
                     if p["name"] == part_name:
+
                         p["stock"] -= required
+
+                        production_record["parts_used"].append({
+                            "part": part_name,
+                            "qty": required
+                        })
+
+            st.session_state.production_log.append(production_record)
 
             st.success("Production completed")
 
-# ---------------------------
+    # UNDO
+    if st.button("Undo Last Production"):
+
+        if len(st.session_state.production_log) == 0:
+
+            st.warning("No production history")
+
+        else:
+
+            last = st.session_state.production_log.pop()
+
+            for used in last["parts_used"]:
+
+                for p in st.session_state.parts:
+
+                    if p["name"] == used["part"]:
+                        p["stock"] += used["qty"]
+
+            st.success("Last production reversed")
+
+# -----------------------
 # INVENTORY
-# ---------------------------
+# -----------------------
 
 if menu == "Inventory":
+
+    st.header("Inventory Dashboard")
 
     if len(st.session_state.parts) == 0:
 
@@ -177,3 +259,32 @@ if menu == "Inventory":
         df = pd.DataFrame(st.session_state.parts)
 
         st.dataframe(df, use_container_width=True)
+
+        st.subheader("Low Stock Alerts")
+
+        for part in st.session_state.parts:
+
+            if part["stock"] <= part["alert"]:
+
+                st.error(
+                    f"⚠ {part['name']} LOW STOCK — Remaining: {part['stock']}"
+                )
+
+        # Manual inventory adjustment
+
+        st.subheader("Adjust Inventory")
+
+        part_names = [p["name"] for p in st.session_state.parts]
+
+        selected = st.selectbox("Select Part", part_names)
+
+        new_stock = st.number_input("Set New Stock", min_value=0)
+
+        if st.button("Update Inventory"):
+
+            for p in st.session_state.parts:
+
+                if p["name"] == selected:
+                    p["stock"] = new_stock
+
+            st.success("Inventory updated")
