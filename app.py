@@ -1,22 +1,75 @@
 import streamlit as st
 import pandas as pd
+import json
+import os
+from datetime import datetime
 
 st.set_page_config(page_title="Production & Inventory Manager", layout="wide")
 
 st.title("🏭 Production & Inventory Manager")
 
+DATA_FILE = "data.json"
+
 # -----------------------
-# SESSION STORAGE
+# DATA FUNCTIONS
 # -----------------------
+
+def load_data():
+
+    if os.path.exists(DATA_FILE):
+
+        with open(DATA_FILE, "r") as f:
+            return json.load(f)
+
+    return {
+        "parts": [],
+        "products": {},
+        "production_log": []
+    }
+
+
+def save_data():
+
+    data = {
+        "parts": st.session_state.parts,
+        "products": st.session_state.products,
+        "production_log": st.session_state.production_log
+    }
+
+    with open(DATA_FILE, "w") as f:
+        json.dump(data, f, indent=2)
+
+
+# -----------------------
+# LOAD DATA
+# -----------------------
+
+data = load_data()
 
 if "parts" not in st.session_state:
-    st.session_state.parts = []
+    st.session_state.parts = data["parts"]
 
 if "products" not in st.session_state:
-    st.session_state.products = {}
+    st.session_state.products = data["products"]
 
 if "production_log" not in st.session_state:
+    st.session_state.production_log = data["production_log"]
+
+# -----------------------
+# RESET BUTTON
+# -----------------------
+
+if st.sidebar.button("Reset All Data"):
+
+    st.session_state.parts = []
+    st.session_state.products = {}
     st.session_state.production_log = []
+
+    save_data()
+
+    st.success("All data reset")
+
+    st.rerun()
 
 # -----------------------
 # MENU
@@ -64,6 +117,8 @@ if menu == "Add Parts":
                 "alert": alert
             })
 
+            save_data()
+
             st.success("Part added")
 
     st.subheader("Current Parts")
@@ -79,6 +134,9 @@ if menu == "Add Parts":
         if col4.button("Delete", key=f"del_part_{i}"):
 
             st.session_state.parts.pop(i)
+
+            save_data()
+
             st.rerun()
 
 # -----------------------
@@ -105,6 +163,8 @@ if menu == "Add Stock":
             for p in st.session_state.parts:
                 if p["name"] == selected:
                     p["stock"] += qty
+
+            save_data()
 
             st.success("Stock updated")
 
@@ -139,6 +199,8 @@ if menu == "Create Product":
                 "qty": qty
             })
 
+            save_data()
+
         if product_name in st.session_state.products:
 
             st.subheader("Parts in Product")
@@ -155,6 +217,9 @@ if menu == "Create Product":
                 if col3.button("Remove", key=f"remove_{i}"):
 
                     st.session_state.products[product_name].pop(i)
+
+                    save_data()
+
                     st.rerun()
 
 # -----------------------
@@ -181,8 +246,6 @@ if menu == "Run Production":
 
             bom = st.session_state.products[product]
 
-            from datetime import datetime
-
             production_record = {
                 "product": product,
                 "qty": qty,
@@ -190,43 +253,41 @@ if menu == "Run Production":
                 "parts_used": []
             }
 
-            # Check stock
+            # check stock
             for item in bom:
 
-                part_name = item["part"]
                 required = item["qty"] * qty
 
                 for p in st.session_state.parts:
 
-                    if p["name"] == part_name:
+                    if p["name"] == item["part"]:
 
                         if p["stock"] < required:
-
-                            st.error(f"Not enough {part_name}")
+                            st.error(f"Not enough {p['name']}")
                             st.stop()
 
-            # Deduct stock
+            # deduct stock
             for item in bom:
 
-                part_name = item["part"]
                 required = item["qty"] * qty
 
                 for p in st.session_state.parts:
 
-                    if p["name"] == part_name:
+                    if p["name"] == item["part"]:
 
                         p["stock"] -= required
 
                         production_record["parts_used"].append({
-                            "part": part_name,
+                            "part": p["name"],
                             "qty": required
                         })
 
             st.session_state.production_log.append(production_record)
 
+            save_data()
+
             st.success("Production completed")
 
-    # UNDO
     if st.button("Undo Last Production"):
 
         if len(st.session_state.production_log) == 0:
@@ -243,6 +304,8 @@ if menu == "Run Production":
 
                     if p["name"] == used["part"]:
                         p["stock"] += used["qty"]
+
+            save_data()
 
             st.success("Last production reversed")
 
@@ -274,8 +337,6 @@ if menu == "Inventory":
                     f"⚠ {part['name']} LOW STOCK — Remaining: {part['stock']}"
                 )
 
-        # Manual inventory adjustment
-
         st.subheader("Adjust Inventory")
 
         part_names = [p["name"] for p in st.session_state.parts]
@@ -290,6 +351,8 @@ if menu == "Inventory":
 
                 if p["name"] == selected:
                     p["stock"] = new_stock
+
+            save_data()
 
             st.success("Inventory updated")
 
