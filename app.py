@@ -3,10 +3,65 @@ import pandas as pd
 import json
 import os
 from datetime import datetime
+import requests
+import base64
+
+GITHUB_TOKEN = st.secrets["GITHUB_TOKEN"]
+GITHUB_REPO = st.secrets["GITHUB_REPO"]
+FILE_PATH = "data.json"
+
+
+def upload_to_github(data):
+
+    url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{FILE_PATH}"
+
+    headers = {
+        "Authorization": f"token {GITHUB_TOKEN}"
+    }
+
+    content = base64.b64encode(
+        json.dumps(data, indent=2).encode()
+    ).decode()
+
+    # check if file exists
+    r = requests.get(url, headers=headers)
+
+    if r.status_code == 200:
+        sha = r.json()["sha"]
+    else:
+        sha = None
+
+    payload = {
+        "message": "update data.json",
+        "content": content,
+        "sha": sha
+    }
+
+    requests.put(url, headers=headers, json=payload)
 
 st.set_page_config(page_title="Production & Inventory Manager", layout="wide")
 
 st.title("🏭 Production & Inventory Manager")
+
+# -----------------------
+# DASHBOARD SUMMARY
+# -----------------------
+
+total_parts = len(st.session_state.parts)
+total_products = len(st.session_state.products)
+total_runs = len(st.session_state.production_log)
+
+low_stock = 0
+for part in st.session_state.parts:
+    if part["stock"] <= part["alert"]:
+        low_stock += 1
+
+col1, col2, col3, col4 = st.columns(4)
+
+col1.metric("Total Parts", total_parts)
+col2.metric("Products", total_products)
+col3.metric("Low Stock Alerts", low_stock, delta="Check inventory" if low_stock > 0 else None)
+col4.metric("Production Runs", total_runs)
 
 DATA_FILE = "data.json"
 
@@ -20,6 +75,20 @@ def load_data():
 
         with open(DATA_FILE, "r") as f:
             return json.load(f)
+
+    # try loading from github
+    url = f"https://raw.githubusercontent.com/{GITHUB_REPO}/main/{FILE_PATH}"
+
+    r = requests.get(url)
+
+    if r.status_code == 200:
+
+        data = r.json()
+
+        with open(DATA_FILE, "w") as f:
+            json.dump(data, f, indent=2)
+
+        return data
 
     return {
         "parts": [],
@@ -36,8 +105,12 @@ def save_data():
         "production_log": st.session_state.production_log
     }
 
+    # save locally
     with open(DATA_FILE, "w") as f:
         json.dump(data, f, indent=2)
+
+    # backup to github
+    upload_to_github(data)
 
 
 # -----------------------
