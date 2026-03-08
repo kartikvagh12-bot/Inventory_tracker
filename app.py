@@ -9,6 +9,14 @@ st.set_page_config(page_title="Inventory Production Manager", layout="wide")
 conn = sqlite3.connect("inventory.db", check_same_thread=False)
 cursor = conn.cursor()
 
+if st.sidebar.button("Reset Database"):
+    cursor.execute("DROP TABLE IF EXISTS parts")
+    cursor.execute("DROP TABLE IF EXISTS products")
+    cursor.execute("DROP TABLE IF EXISTS bom")
+    cursor.execute("DROP TABLE IF EXISTS production_history")
+    conn.commit()
+    st.success("Database reset. Refresh the page.")
+
 # CREATE TABLES
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS parts(
@@ -141,30 +149,56 @@ if menu == "Create Product":
     if "product_parts" not in st.session_state:
         st.session_state.product_parts = []
 
-    part = st.selectbox("Select Part", parts["name"])
-    qty = st.number_input("Quantity Required", min_value=1)
+    col1, col2 = st.columns(2)
+
+    with col1:
+        part = st.selectbox("Select Part", parts["name"])
+
+    with col2:
+        qty = st.number_input("Quantity Required", min_value=1)
 
     if st.button("Add Part"):
 
-        part_id = parts.loc[parts["name"] == part,"id"].values[0]
+        part_id = parts.loc[parts["name"] == part, "id"].values[0]
 
         st.session_state.product_parts.append(
-            {"part":part,"part_id":part_id,"qty":qty}
+            {"part": part, "part_id": part_id, "qty": qty}
         )
 
     st.subheader("Parts In Product")
 
-    if st.session_state.product_parts:
-        st.table(st.session_state.product_parts)
+    for i, item in enumerate(st.session_state.product_parts):
+
+        col1, col2, col3 = st.columns([3,1,1])
+
+        col1.write(item["part"])
+        col2.write(item["qty"])
+
+        if col3.button("Remove", key=i):
+            st.session_state.product_parts.pop(i)
+            st.rerun()
 
     if st.button("Save Product"):
 
         if product_name == "":
             st.error("Enter product name")
 
+        elif len(st.session_state.product_parts) == 0:
+            st.error("Add at least one part")
+
         else:
 
-            try:
+            cursor.execute(
+                "SELECT * FROM products WHERE name=?",
+                (product_name,)
+            )
+
+            existing = cursor.fetchone()
+
+            if existing:
+                st.error("Product already exists")
+
+            else:
 
                 cursor.execute(
                     "INSERT INTO products(name) VALUES(?)",
@@ -179,7 +213,7 @@ if menu == "Create Product":
 
                     cursor.execute(
                         "INSERT INTO bom(product_id,part_id,qty) VALUES(?,?,?)",
-                        (product_id,item["part_id"],item["qty"])
+                        (product_id, item["part_id"], item["qty"])
                     )
 
                 conn.commit()
@@ -187,9 +221,6 @@ if menu == "Create Product":
                 st.session_state.product_parts = []
 
                 st.success("Product saved")
-
-            except:
-                st.error("Product already exists")
 
 # -----------------------
 # RECORD PRODUCTION
@@ -213,42 +244,48 @@ if menu == "Record Production":
         if st.button("Run Production"):
 
             product_id = products.loc[
-                products["name"] == product,"id"
+                products["name"] == product, "id"
             ].values[0]
 
             bom = pd.read_sql(
-                f"SELECT * FROM bom WHERE product_id={product_id}",
-                conn
+                "SELECT part_id, qty FROM bom WHERE product_id=?",
+                conn,
+                params=(product_id,)
             )
 
-            for _,row in bom.iterrows():
+            if len(bom) == 0:
+                st.error("No parts defined for this product")
+                st.stop()
 
-                required = row["qty"] * qty
+            for _, row in bom.iterrows():
+
+                required = int(row["qty"]) * qty
 
                 stock = pd.read_sql(
-                    f"SELECT stock FROM parts WHERE id={row['part_id']}",
-                    conn
+                    "SELECT stock FROM parts WHERE id=?",
+                    conn,
+                    params=(row["part_id"],)
                 )["stock"].values[0]
 
                 if stock < required:
 
-                    st.error("Not enough parts in inventory")
+                    st.error("Not enough inventory to run production")
                     st.stop()
 
-            for _,row in bom.iterrows():
+            for _, row in bom.iterrows():
 
-                required = row["qty"] * qty
+                required = int(row["qty"]) * qty
 
                 cursor.execute(
                     "UPDATE parts SET stock = stock - ? WHERE id=?",
-                    (required,row["part_id"])
+                    (required, row["part_id"])
                 )
 
             conn.commit()
 
             cursor.execute(
                 "INSERT INTO production_history VALUES(?,?,?)",
-                (product,qty,datetime.now().strftime("%Y-%m-%d %H:%M"))
+                (product, qty, datetime.now().strftime("%Y-%m-%d %H:%M"))
             )
 
             conn.commit()
