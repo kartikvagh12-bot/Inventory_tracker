@@ -1,0 +1,156 @@
+{
+  "parts": [
+    {
+      "name": "Valve Body",
+      "stock": 100,
+      "alert": 20
+    },
+    {
+      "name": "Rubber Seal",
+      "stock": 100,
+      "alert": 50
+    },
+    {
+      "name": "Steel Bolt",
+      "stock": 90,
+      "alert": 100
+    },
+    {
+      "name": "Compression Spring",
+      "stock": 80,
+      "alert": 30
+    }
+  ],
+  "products": {
+    "Valve01": [
+      {
+        "part": "Valve Body",
+        "qty": 1
+      },
+      {
+        "part": "Rubber Seal",
+        "qty": 2
+      },
+      {
+        "part": "Steel Bolt",
+        "qty": 4
+      },
+      {
+        "part": "Compression Spring",
+        "qty": 1
+      }
+    ],
+    "Valve02": [
+      {
+        "part": "Valve Body",
+        "qty": 2
+      },
+      {
+        "part": "Rubber Seal",
+        "qty": 4
+      },
+      {
+        "part": "Steel Bolt",
+        "qty": 8
+      },
+      {
+        "part": "Compression Spring",
+        "qty": 2
+      }
+    ]
+  },
+  "production_log": [
+    {
+      "product": "Valve01",
+      "qty": 20,
+      "time": "2026-03-08 18:36",
+      "parts_used": [
+        {
+          "part": "Valve Body",
+          "qty": 20
+        },
+        {
+          "part": "Rubber Seal",
+          "qty": 40
+        },
+        {
+          "part": "Steel Bolt",
+          "qty": 80
+        },
+        {
+          "part": "Compression Spring",
+          "qty": 20
+        }
+      ]
+    },
+    {
+      "product": "Valve02",
+      "qty": 25,
+      "time": "2026-03-08 18:36",
+      "parts_used": [
+        {
+          "part": "Valve Body",
+          "qty": 50
+        },
+        {
+          "part": "Rubber Seal",
+          "qty": 100
+        },
+        {
+          "part": "Steel Bolt",
+          "qty": 200
+        },
+        {
+          "part": "Compression Spring",
+          "qty": 50
+        }
+      ]
+    },
+    {
+      "product": "Valve01",
+      "qty": 30,
+      "time": "2026-03-08 18:37",
+      "parts_used": [
+        {
+          "part": "Valve Body",
+          "qty": 30
+        },
+        {
+          "part": "Rubber Seal",
+          "qty": 60
+        },
+        {
+          "part": "Steel Bolt",
+          "qty": 120
+        },
+        {
+          "part": "Compression Spring",
+          "qty": 30
+        }
+      ]
+    },
+    {
+      "product": "Valve01",
+      "qty": 10,
+      "time": "2026-03-08 18:37",
+      "parts_used": [
+        {
+          "part": "Valve Body",
+          "qty": 10
+        },
+        {
+          "part": "Rubber Seal",
+          "qty": 20
+        },
+        {
+          "part": "Steel Bolt",
+          "qty": 40
+        },
+        {
+          "part": "Compression Spring",
+          "qty": 10
+        }
+      ]
+    }
+  ]
+}
