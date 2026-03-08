@@ -1,9 +1,9 @@
-st.set_page_config(page_title="Manufacturing Inventory System", layout="wide")
-st.title("Production & Inventory Manager")
-
 import streamlit as st
 import sqlite3
 import pandas as pd
+
+st.set_page_config(page_title="Manufacturing Inventory System", layout="wide")
+st.title("Production & Inventory Manager")
 
 # DATABASE
 conn = sqlite3.connect("inventory.db", check_same_thread=False)
