@@ -6,6 +6,8 @@ from datetime import datetime
 import requests
 import base64
 
+DATA_FILE = "data.json"
+
 GITHUB_TOKEN = st.secrets["GITHUB_TOKEN"]
 GITHUB_REPO = st.secrets["GITHUB_REPO"]
 FILE_PATH = "data.json"
