@@ -44,28 +44,6 @@ st.set_page_config(page_title="Production & Inventory Manager", layout="wide")
 st.title("🏭 Production & Inventory Manager")
 
 # -----------------------
-# DASHBOARD SUMMARY
-# -----------------------
-
-total_parts = len(st.session_state.parts)
-total_products = len(st.session_state.products)
-total_runs = len(st.session_state.production_log)
-
-low_stock = 0
-for part in st.session_state.parts:
-    if part["stock"] <= part["alert"]:
-        low_stock += 1
-
-col1, col2, col3, col4 = st.columns(4)
-
-col1.metric("Total Parts", total_parts)
-col2.metric("Products", total_products)
-col3.metric("Low Stock Alerts", low_stock, delta="Check inventory" if low_stock > 0 else None)
-col4.metric("Production Runs", total_runs)
-
-DATA_FILE = "data.json"
-
-# -----------------------
 # DATA FUNCTIONS
 # -----------------------
 
@@ -127,6 +105,27 @@ if "products" not in st.session_state:
 
 if "production_log" not in st.session_state:
     st.session_state.production_log = data["production_log"]
+
+# -----------------------
+# DASHBOARD SUMMARY
+# -----------------------
+
+total_parts = len(st.session_state.parts)
+total_products = len(st.session_state.products)
+total_runs = len(st.session_state.production_log)
+
+low_stock = 0
+for part in st.session_state.parts:
+    if part["stock"] <= part["alert"]:
+        low_stock += 1
+
+col1, col2, col3, col4 = st.columns(4)
+
+col1.metric("Total Parts", total_parts)
+col2.metric("Products", total_products)
+col3.metric("Low Stock Alerts", low_stock)
+col4.metric("Production Runs", total_runs)
+st.divider()
 
 # -----------------------
 # RESET BUTTON
