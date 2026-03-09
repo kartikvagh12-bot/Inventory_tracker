@@ -130,6 +130,47 @@ col4.metric("Production Runs", total_runs)
 st.divider()
 
 # -----------------------
+# PRODUCTION SUMMARY
+# -----------------------
+
+today = datetime.now().strftime("%Y-%m-%d")
+
+today_runs = 0
+today_units = 0
+
+product_counts = {}
+
+for run in st.session_state.production_log:
+
+    if run["time"].startswith(today):
+
+        today_runs += 1
+        today_units += run["qty"]
+
+    product = run["product"]
+
+    if product not in product_counts:
+        product_counts[product] = 0
+
+    product_counts[product] += run["qty"]
+
+most_product = "None"
+most_count = 0
+
+for p, q in product_counts.items():
+
+    if q > most_count:
+        most_product = p
+        most_count = q
+
+
+col1, col2, col3 = st.columns(3)
+
+col1.metric("Today's Production Runs", today_runs)
+col2.metric("Units Produced Today", today_units)
+col3.metric("Most Produced Product", most_product)
+
+# -----------------------
 # RESET BUTTON
 # -----------------------
 
@@ -399,7 +440,24 @@ if menu == "Inventory":
 
         df = pd.DataFrame(st.session_state.parts)
 
+        search = st.text_input("Search Part")
+
+        filtered_parts = [
+            p for p in st.session_state.parts
+            if search.lower() in p["name"].lower()
+        ]
+        
+        df = pd.DataFrame(filtered_parts)
+
         st.dataframe(df, use_container_width=True)
+        csv = df.to_csv(index=False).encode('utf-8')
+
+        st.download_button(
+            label="Download Inventory Report (CSV)",
+            data=csv,
+            file_name="inventory_report.csv",
+            mime="text/csv"
+        )
 
         st.subheader("Low Stock Alerts")
 
@@ -457,3 +515,11 @@ if menu == "Production History":
         df = pd.DataFrame(history)
 
         st.dataframe(df, use_container_width=True)
+        csv = df.to_csv(index=False).encode('utf-8')
+
+        st.download_button(
+            label="Download Production Report (CSV)",
+            data=csv,
+            file_name="production_report.csv",
+            mime="text/csv"
+        )
