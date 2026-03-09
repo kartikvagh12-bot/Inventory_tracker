@@ -19,6 +19,11 @@
       "name": "Back_support",
       "stock": 300,
       "alert": 30
+    },
+    {
+      "name": "Wheel_arm",
+      "stock": 400,
+      "alert": 50
     }
   ],
   "products": {},
