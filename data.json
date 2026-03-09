@@ -44,6 +44,10 @@
       {
         "part": "Armrest",
         "qty": 2
+      },
+      {
+        "part": "Back_support",
+        "qty": 1
       }
     ]
   },
