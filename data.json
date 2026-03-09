@@ -2,32 +2,32 @@
   "parts": [
     {
       "name": "Seat",
-      "stock": 60,
+      "stock": 45,
       "alert": 20
     },
     {
       "name": "Wheels",
-      "stock": 100,
+      "stock": 25,
       "alert": 50
     },
     {
       "name": "Armrest",
-      "stock": 120,
+      "stock": 90,
       "alert": 20
     },
     {
       "name": "Back_support",
-      "stock": 260,
+      "stock": 245,
       "alert": 30
     },
     {
       "name": "Wheel_arm",
-      "stock": 200,
+      "stock": 125,
       "alert": 50
     },
     {
       "name": "Center_stand",
-      "stock": 160,
+      "stock": 145,
       "alert": 50
     }
   ],
@@ -119,6 +119,37 @@
         {
           "part": "Center_stand",
           "qty": 20
+        }
+      ]
+    },
+    {
+      "product": "Chair",
+      "qty": 15,
+      "time": "2026-03-09 12:29",
+      "parts_used": [
+        {
+          "part": "Seat",
+          "qty": 15
+        },
+        {
+          "part": "Wheels",
+          "qty": 75
+        },
+        {
+          "part": "Armrest",
+          "qty": 30
+        },
+        {
+          "part": "Back_support",
+          "qty": 15
+        },
+        {
+          "part": "Wheel_arm",
+          "qty": 75
+        },
+        {
+          "part": "Center_stand",
+          "qty": 15
         }
       ]
     }
