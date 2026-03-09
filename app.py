@@ -449,6 +449,8 @@ if menu == "Inventory":
         
         df = pd.DataFrame(filtered_parts)
 
+        df.index = df.index + 1
+
         st.dataframe(df, use_container_width=True)
         csv = df.to_csv(index=False).encode('utf-8')
 
@@ -513,6 +515,8 @@ if menu == "Production History":
             })
 
         df = pd.DataFrame(history)
+
+        df.index = df.index + 1
 
         st.dataframe(df, use_container_width=True)
         csv = df.to_csv(index=False).encode('utf-8')
