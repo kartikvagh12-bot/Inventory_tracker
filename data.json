@@ -40,6 +40,10 @@
       {
         "part": "Wheels",
         "qty": 5
+      },
+      {
+        "part": "Armrest",
+        "qty": 2
       }
     ]
   },
