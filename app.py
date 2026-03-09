@@ -533,3 +533,7 @@ if menu == "Production History":
             file_name="production_report.csv",
             mime="text/csv"
         )
+
+st.sidebar.markdown("---")
+st.sidebar.caption("Production & Inventory Manager")
+st.sidebar.caption("Developed by Kartik Vagh")
