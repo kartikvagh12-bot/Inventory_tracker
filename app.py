@@ -25,7 +25,6 @@ def upload_to_github(data):
         json.dumps(data, indent=2).encode()
     ).decode()
 
-    # check if file exists
     r = requests.get(url, headers=headers)
 
     if r.status_code == 200:
@@ -35,11 +34,14 @@ def upload_to_github(data):
 
     payload = {
         "message": "update data.json",
-        "content": content,
-        "sha": sha
+        "content": content
     }
 
+    if sha:
+        payload["sha"] = sha
+
     requests.put(url, headers=headers, json=payload)
+
 
 st.set_page_config(page_title="Production & Inventory Manager", layout="wide")
 
@@ -56,7 +58,6 @@ def load_data():
         with open(DATA_FILE, "r") as f:
             return json.load(f)
 
-    # try loading from github
     url = f"https://raw.githubusercontent.com/{GITHUB_REPO}/main/{FILE_PATH}"
 
     r = requests.get(url)
@@ -73,7 +74,8 @@ def load_data():
     return {
         "parts": [],
         "products": {},
-        "production_log": []
+        "production_log": [],
+        "inventory_log": []
     }
 
 
@@ -82,14 +84,13 @@ def save_data():
     data = {
         "parts": st.session_state.parts,
         "products": st.session_state.products,
-        "production_log": st.session_state.production_log
+        "production_log": st.session_state.production_log,
+        "inventory_log": st.session_state.inventory_log
     }
 
-    # save locally
     with open(DATA_FILE, "w") as f:
         json.dump(data, f, indent=2)
 
-    # backup to github
     upload_to_github(data)
 
 
@@ -108,8 +109,11 @@ if "products" not in st.session_state:
 if "production_log" not in st.session_state:
     st.session_state.production_log = data["production_log"]
 
+if "inventory_log" not in st.session_state:
+    st.session_state.inventory_log = data.get("inventory_log", [])
+
 # -----------------------
-# DASHBOARD SUMMARY
+# DASHBOARD
 # -----------------------
 
 total_parts = len(st.session_state.parts)
@@ -127,6 +131,7 @@ col1.metric("Total Parts", total_parts)
 col2.metric("Products", total_products)
 col3.metric("Low Stock Alerts", low_stock)
 col4.metric("Production Runs", total_runs)
+
 st.divider()
 
 # -----------------------
@@ -163,7 +168,6 @@ for p, q in product_counts.items():
         most_product = p
         most_count = q
 
-
 col1, col2, col3 = st.columns(3)
 
 col1.metric("Today's Production Runs", today_runs)
@@ -171,7 +175,7 @@ col2.metric("Units Produced Today", today_units)
 col3.metric("Most Produced Product", most_product)
 
 # -----------------------
-# RESET BUTTON
+# RESET
 # -----------------------
 
 if st.sidebar.button("Reset All Data"):
@@ -179,6 +183,7 @@ if st.sidebar.button("Reset All Data"):
     st.session_state.parts = []
     st.session_state.products = {}
     st.session_state.production_log = []
+    st.session_state.inventory_log = []
 
     save_data()
 
@@ -198,6 +203,7 @@ menu = st.sidebar.radio(
         "Create Product",
         "Run Production",
         "Inventory",
+        "Inventory History",
         "Production History"
     ]
 )
@@ -236,24 +242,6 @@ if menu == "Add Parts":
 
             st.success("Part added")
 
-    st.subheader("Current Parts")
-
-    for i, part in enumerate(st.session_state.parts):
-
-        col1, col2, col3, col4 = st.columns([3,2,2,1])
-
-        col1.write(part["name"])
-        col2.write(f"Stock: {part['stock']}")
-        col3.write(f"Alert: {part['alert']}")
-
-        if col4.button("Delete", key=f"del_part_{i}"):
-
-            st.session_state.parts.pop(i)
-
-            save_data()
-
-            st.rerun()
-
 # -----------------------
 # ADD STOCK
 # -----------------------
@@ -277,7 +265,16 @@ if menu == "Add Stock":
 
             for p in st.session_state.parts:
                 if p["name"] == selected:
+
                     p["stock"] += qty
+
+                    st.session_state.inventory_log.append({
+                        "Time": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                        "Part": p["name"],
+                        "Change": f"+{qty}",
+                        "New Stock": p["stock"],
+                        "Reason": "Stock Added"
+                    })
 
             save_data()
 
@@ -316,27 +313,6 @@ if menu == "Create Product":
 
             save_data()
 
-        if product_name in st.session_state.products:
-
-            st.subheader("Parts in Product")
-
-            bom = st.session_state.products[product_name]
-
-            for i, item in enumerate(bom):
-
-                col1, col2, col3 = st.columns([3,2,1])
-
-                col1.write(item["part"])
-                col2.write(item["qty"])
-
-                if col3.button("Remove", key=f"remove_{i}"):
-
-                    st.session_state.products[product_name].pop(i)
-
-                    save_data()
-
-                    st.rerun()
-
 # -----------------------
 # RUN PRODUCTION
 # -----------------------
@@ -368,7 +344,6 @@ if menu == "Run Production":
                 "parts_used": []
             }
 
-            # check stock
             for item in bom:
 
                 required = item["qty"] * qty
@@ -381,7 +356,6 @@ if menu == "Run Production":
                             st.error(f"Not enough {p['name']}")
                             st.stop()
 
-            # deduct stock
             for item in bom:
 
                 required = item["qty"] * qty
@@ -397,32 +371,19 @@ if menu == "Run Production":
                             "qty": required
                         })
 
+                        st.session_state.inventory_log.append({
+                            "Time": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                            "Part": p["name"],
+                            "Change": f"-{required}",
+                            "New Stock": p["stock"],
+                            "Reason": f"Production: {product}"
+                        })
+
             st.session_state.production_log.append(production_record)
 
             save_data()
 
             st.success("Production completed")
-
-    if st.button("Undo Last Production"):
-
-        if len(st.session_state.production_log) == 0:
-
-            st.warning("No production history")
-
-        else:
-
-            last = st.session_state.production_log.pop()
-
-            for used in last["parts_used"]:
-
-                for p in st.session_state.parts:
-
-                    if p["name"] == used["part"]:
-                        p["stock"] += used["qty"]
-
-            save_data()
-
-            st.success("Last production reversed")
 
 # -----------------------
 # INVENTORY
@@ -438,20 +399,19 @@ if menu == "Inventory":
 
     else:
 
-        df = pd.DataFrame(st.session_state.parts)
-
         search = st.text_input("Search Part")
 
         filtered_parts = [
             p for p in st.session_state.parts
             if search.lower() in p["name"].lower()
         ]
-        
+
         df = pd.DataFrame(filtered_parts)
 
         df.index = df.index + 1
 
         st.dataframe(df, use_container_width=True)
+
         csv = df.to_csv(index=False).encode('utf-8')
 
         st.download_button(
@@ -461,34 +421,34 @@ if menu == "Inventory":
             mime="text/csv"
         )
 
-        st.subheader("Low Stock Alerts")
+# -----------------------
+# INVENTORY HISTORY
+# -----------------------
 
-        for part in st.session_state.parts:
+if menu == "Inventory History":
 
-            if part["stock"] <= part["alert"]:
+    st.header("Inventory History")
 
-                st.error(
-                    f"⚠ {part['name']} LOW STOCK — Remaining: {part['stock']}"
-                )
+    if len(st.session_state.inventory_log) == 0:
 
-        st.subheader("Adjust Inventory")
+        st.info("No inventory changes recorded yet")
 
-        part_names = [p["name"] for p in st.session_state.parts]
+    else:
 
-        selected = st.selectbox("Select Part", part_names)
+        df = pd.DataFrame(st.session_state.inventory_log)
 
-        new_stock = st.number_input("Set New Stock", min_value=0)
+        df.index = df.index + 1
 
-        if st.button("Update Inventory"):
+        st.dataframe(df, use_container_width=True)
 
-            for p in st.session_state.parts:
+        csv = df.to_csv(index=False).encode('utf-8')
 
-                if p["name"] == selected:
-                    p["stock"] = new_stock
-
-            save_data()
-
-            st.success("Inventory updated")
+        st.download_button(
+            label="Download Inventory History (CSV)",
+            data=csv,
+            file_name="inventory_history.csv",
+            mime="text/csv"
+        )
 
 # -----------------------
 # PRODUCTION HISTORY
@@ -519,6 +479,7 @@ if menu == "Production History":
         df.index = df.index + 1
 
         st.dataframe(df, use_container_width=True)
+
         csv = df.to_csv(index=False).encode('utf-8')
 
         st.download_button(
