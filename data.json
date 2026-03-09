@@ -48,6 +48,10 @@
       {
         "part": "Back_support",
         "qty": 1
+      },
+      {
+        "part": "Wheel_arm",
+        "qty": 5
       }
     ]
   },
