@@ -427,6 +427,45 @@ if menu == "Inventory":
             mime="text/csv"
         )
 
+        # LOW STOCK ALERTS
+        st.subheader("Low Stock Alerts")
+
+        low_found = False
+
+        for part in st.session_state.parts:
+
+            if part["stock"] <= part["alert"]:
+
+                st.error(
+                    f"⚠ {part['name']} LOW STOCK — Remaining: {part['stock']}"
+                )
+
+                low_found = True
+
+        if not low_found:
+            st.success("All inventory levels are healthy")
+
+        # INVENTORY ADJUSTMENT
+        st.subheader("Adjust Inventory")
+
+        part_names = [p["name"] for p in st.session_state.parts]
+
+        selected = st.selectbox("Select Part", part_names)
+
+        new_stock = st.number_input("Set New Stock", min_value=0)
+
+        if st.button("Update Inventory"):
+
+            for p in st.session_state.parts:
+
+                if p["name"] == selected:
+
+                    p["stock"] = new_stock
+
+            save_data()
+
+            st.success("Inventory updated")
+
 # -----------------------
 # INVENTORY HISTORY
 # -----------------------
