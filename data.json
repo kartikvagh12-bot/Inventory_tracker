@@ -2,7 +2,7 @@
   "parts": [
     {
       "name": "Seat",
-      "stock": 25,
+      "stock": 125,
       "alert": 20
     },
     {
@@ -379,6 +379,14 @@
       "Change": -5,
       "New Stock": 125,
       "Reason": "Production: Chair"
+    },
+    {
+      "Time": "2026-03-09 13:04",
+      "Part": "Seat",
+      "Previous Stock": 25,
+      "Change": 100,
+      "New Stock": 125,
+      "Reason": "Stock Added"
     }
   ]
 }
