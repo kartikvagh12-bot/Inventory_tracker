@@ -43,9 +43,15 @@ def upload_to_github(data):
     requests.put(url, headers=headers, json=payload)
 
 
-st.set_page_config(page_title="Production & Inventory Manager", layout="wide")
+st.set_page_config(
+    page_title="Production & Inventory Manager",
+    page_icon="🏭",
+    layout="wide"
+)
 
 st.title("🏭 Production & Inventory Manager")
+st.caption("Smart stock and production tracking for manufacturing")
+st.divider()
 
 # -----------------------
 # DATA FUNCTIONS
@@ -168,11 +174,16 @@ for p, q in product_counts.items():
         most_product = p
         most_count = q
 
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4 = st.columns(4)
+
+avg_units = 0
+if today_runs > 0:
+    avg_units = round(today_units / today_runs, 2)
 
 col1.metric("Today's Production Runs", today_runs)
 col2.metric("Units Produced Today", today_units)
-col3.metric("Most Produced Product", most_product)
+col3.metric("Avg Units / Run", avg_units)
+col4.metric("Most Produced Product", most_product)
 
 # -----------------------
 # RESET
@@ -536,4 +547,4 @@ if menu == "Production History":
 
 st.sidebar.markdown("---")
 st.sidebar.caption("Production & Inventory Manager")
-st.sidebar.caption("Developed by Kartik Vagh")
+st.sidebar.caption("© 2026 Kartik Vagh")
