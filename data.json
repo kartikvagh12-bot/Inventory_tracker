@@ -9,6 +9,11 @@
       "name": "Wheels",
       "stock": 300,
       "alert": 50
+    },
+    {
+      "name": "Armrest",
+      "stock": 200,
+      "alert": 20
     }
   ],
   "products": {},
