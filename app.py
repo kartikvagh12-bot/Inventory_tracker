@@ -265,16 +265,16 @@ if menu == "Add Stock":
 
             for p in st.session_state.parts:
                 if p["name"] == selected:
-
+            
                     previous_stock = p["stock"]
-
+            
                     p["stock"] += qty
-                    
+            
                     st.session_state.inventory_log.append({
                         "Time": datetime.now().strftime("%Y-%m-%d %H:%M"),
                         "Part": p["name"],
                         "Previous Stock": previous_stock,
-                        "Change": f"+{qty}",
+                        "Change": qty,
                         "New Stock": p["stock"],
                         "Reason": "Stock Added"
                     })
@@ -370,16 +370,17 @@ if menu == "Run Production":
                         previous_stock = p["stock"]
 
                         p["stock"] -= required
-
+                        
                         production_record["parts_used"].append({
                             "part": p["name"],
                             "qty": required
                         })
-
+                        
                         st.session_state.inventory_log.append({
                             "Time": datetime.now().strftime("%Y-%m-%d %H:%M"),
                             "Part": p["name"],
-                            "Change": f"-{required}",
+                            "Previous Stock": previous_stock,
+                            "Change": -required,
                             "New Stock": p["stock"],
                             "Reason": f"Production: {product}"
                         })
