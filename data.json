@@ -29,6 +29,11 @@
       "name": "Centre stand",
       "stock": 110,
       "alert": 20
+    },
+    {
+      "name": "Table top",
+      "stock": 100,
+      "alert": 20
     }
   ],
   "products": {
