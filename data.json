@@ -34,6 +34,11 @@
       "name": "Bolts",
       "stock": 600,
       "alert": 50
+    },
+    {
+      "name": "Table top",
+      "stock": 200,
+      "alert": 20
     }
   ],
   "products": {
