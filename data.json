@@ -24,6 +24,11 @@
       "name": "Wheel arms",
       "stock": 400,
       "alert": 50
+    },
+    {
+      "name": "Centre stand",
+      "stock": 100,
+      "alert": 20
     }
   ],
   "products": {},
