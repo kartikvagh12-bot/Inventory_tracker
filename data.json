@@ -12,7 +12,7 @@
     },
     {
       "name": "Arm rest",
-      "stock": 20,
+      "stock": 220,
       "alert": 40
     },
     {
@@ -235,6 +235,14 @@
       "Previous Stock": 10,
       "Change": 100,
       "New Stock": 110,
+      "Reason": "Stock Added"
+    },
+    {
+      "Time": "2026-03-10 18:19",
+      "Part": "Arm rest",
+      "Previous Stock": 20,
+      "Change": 200,
+      "New Stock": 220,
       "Reason": "Stock Added"
     }
   ]
