@@ -7,7 +7,7 @@
     },
     {
       "name": "Back support",
-      "stock": 10,
+      "stock": 110,
       "alert": 20
     },
     {
@@ -177,6 +177,14 @@
       "Change": 10,
       "New Stock": 10,
       "Reason": "Manual Adjustment"
+    },
+    {
+      "Time": "2026-03-10 20:57",
+      "Part": "Back support",
+      "Previous Stock": 10,
+      "Change": 100,
+      "New Stock": 110,
+      "Reason": "Stock Added"
     }
   ]
 }
