@@ -32,7 +32,7 @@
     },
     {
       "name": "Bolts",
-      "stock": 600,
+      "stock": 1600,
       "alert": 50
     },
     {
@@ -275,6 +275,14 @@
       "Change": 800,
       "New Stock": 800,
       "Reason": "Part Created"
+    },
+    {
+      "Time": "2026-03-10 22:09",
+      "Part": "Bolts",
+      "Previous Stock": 600,
+      "Change": 1000,
+      "New Stock": 1600,
+      "Reason": "Stock Added"
     }
   ]
 }
