@@ -32,17 +32,17 @@
     },
     {
       "name": "Table top",
-      "stock": 100,
+      "stock": 70,
       "alert": 20
     },
     {
       "name": "Table frame",
-      "stock": 100,
+      "stock": 70,
       "alert": 20
     },
     {
       "name": "Table legs",
-      "stock": 400,
+      "stock": 280,
       "alert": 50
     }
   ],
@@ -103,6 +103,11 @@
       "product": "Chair",
       "qty": 40,
       "time": "2026-03-10 18:10"
+    },
+    {
+      "product": "Table",
+      "qty": 30,
+      "time": "2026-03-10 18:42"
     }
   ],
   "inventory_log": [
@@ -297,6 +302,30 @@
       "Change": 100,
       "New Stock": 110,
       "Reason": "Stock Added"
+    },
+    {
+      "Time": "2026-03-10 18:42",
+      "Part": "Table top",
+      "Previous Stock": 100,
+      "Change": -30,
+      "New Stock": 70,
+      "Reason": "Production: Table"
+    },
+    {
+      "Time": "2026-03-10 18:42",
+      "Part": "Table frame",
+      "Previous Stock": 100,
+      "Change": -30,
+      "New Stock": 70,
+      "Reason": "Production: Table"
+    },
+    {
+      "Time": "2026-03-10 18:42",
+      "Part": "Table legs",
+      "Previous Stock": 400,
+      "Change": -120,
+      "New Stock": 280,
+      "Reason": "Production: Table"
     }
   ]
 }
