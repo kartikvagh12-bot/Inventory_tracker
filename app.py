@@ -427,6 +427,24 @@ if menu == "Inventory":
 
     st.dataframe(df, use_container_width=True)
 
+        # LOW STOCK ALERTS
+    st.subheader("Low Stock Alerts")
+    
+    low_found = False
+    
+    for part in st.session_state.parts:
+    
+        if part["stock"] <= part["alert"]:
+    
+            st.error(
+                f"⚠ {part['name']} LOW STOCK — Remaining: {part['stock']}"
+            )
+    
+            low_found = True
+    
+    if not low_found:
+        st.success("All inventory levels are healthy")
+
     csv = df.to_csv(index=False).encode('utf-8')
 
     st.download_button(
