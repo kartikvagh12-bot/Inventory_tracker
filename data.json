@@ -49,10 +49,6 @@
   "products": {
     "Chair": [
       {
-        "part": "Seat",
-        "qty": 1
-      },
-      {
         "part": "Back support",
         "qty": 1
       },
