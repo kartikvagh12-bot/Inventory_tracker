@@ -17,7 +17,7 @@
     },
     {
       "name": "Wheels",
-      "stock": 50,
+      "stock": 450,
       "alert": 50
     },
     {
@@ -243,6 +243,14 @@
       "Previous Stock": 20,
       "Change": 200,
       "New Stock": 220,
+      "Reason": "Stock Added"
+    },
+    {
+      "Time": "2026-03-10 18:19",
+      "Part": "Wheels",
+      "Previous Stock": 50,
+      "Change": 400,
+      "New Stock": 450,
       "Reason": "Stock Added"
     }
   ]
