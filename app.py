@@ -264,12 +264,30 @@ if menu == "Add Parts":
 
         if col4.button("❌", key=f"temp_delete_{i}"):
 
-            st.session_state.parts.remove(part)
-            st.session_state.temp_parts.pop(i)
-
-            save_data()
-
-            st.rerun()
+            # check if part is used in any product
+            used_in = []
+        
+            for product, bom in st.session_state.products.items():
+                for item in bom:
+                    if item["part"] == part["name"]:
+                        used_in.append(product)
+        
+            if used_in:
+        
+                product_list = ", ".join(used_in)
+        
+                st.error(
+                    f'Cannot delete "{part["name"]}" — used in product(s): {product_list}'
+                )
+        
+            else:
+        
+                st.session_state.parts.remove(part)
+                st.session_state.temp_parts.pop(i)
+        
+                save_data()
+        
+                st.rerun()
 
 
 # -----------------------
