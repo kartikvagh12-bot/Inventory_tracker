@@ -253,6 +253,37 @@ if menu == "Add Parts":
 
             st.success("Part added")
 
+st.divider()
+st.subheader("Existing Parts")
+
+if len(st.session_state.parts) == 0:
+    st.info("No parts added yet")
+
+else:
+
+    df = pd.DataFrame(st.session_state.parts)
+    df.index = df.index + 1
+    st.dataframe(df, use_container_width=True)
+
+    st.subheader("Remove Part")
+
+    part_names = [p["name"] for p in st.session_state.parts]
+
+    part_to_remove = st.selectbox("Select Part to Remove", part_names)
+
+    if st.button("Delete Part"):
+
+        st.session_state.parts = [
+            p for p in st.session_state.parts
+            if p["name"] != part_to_remove
+        ]
+
+        save_data()
+
+        st.success("Part removed")
+
+        st.rerun()
+
 # -----------------------
 # ADD STOCK
 # -----------------------
