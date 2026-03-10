@@ -579,13 +579,27 @@ if menu == "Inventory":
     if st.button("Update Inventory"):
 
         for p in st.session_state.parts:
-
+    
             if p["name"] == selected:
+    
+                previous_stock = p["stock"]
+    
+                change = new_stock - previous_stock
+    
                 p["stock"] = new_stock
+    
+                st.session_state.inventory_log.append({
+                    "Time": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                    "Part": p["name"],
+                    "Previous Stock": previous_stock,
+                    "Change": change,
+                    "New Stock": new_stock,
+                    "Reason": "Manual Adjustment"
+                })
 
-        save_data()
+    save_data()
 
-        st.success("Inventory updated")
+    st.success("Inventory updated")
 
 
 # -----------------------
