@@ -314,7 +314,7 @@ if menu == "Create Product":
 
     product_name = st.text_input("Product Name")
 
-    if not st.session_state.parts:
+    if len(st.session_state.parts) == 0:
         st.warning("Add parts first")
 
     else:
@@ -327,7 +327,21 @@ if menu == "Create Product":
 
         if st.button("Add Part to Product"):
 
-            st.session_state.products.setdefault(product_name, []).append({
+            if product_name.strip() == "":
+                st.error("Enter product name")
+                st.stop()
+
+            # create product if it doesn't exist
+            if product_name not in st.session_state.products:
+                st.session_state.products[product_name] = []
+
+            # prevent duplicate parts
+            for existing in st.session_state.products[product_name]:
+                if existing["part"] == part:
+                    st.error("This part is already added to the product")
+                    st.stop()
+
+            st.session_state.products[product_name].append({
                 "part": part,
                 "qty": qty
             })
@@ -335,6 +349,41 @@ if menu == "Create Product":
             save_data()
 
             st.success("Part added to product")
+
+            st.rerun()
+
+    # -----------------------
+    # SHOW PRODUCT BOM
+    # -----------------------
+
+    if product_name in st.session_state.products:
+
+        st.divider()
+        st.subheader("Parts Used In Product")
+
+        bom = st.session_state.products[product_name]
+
+        if len(bom) == 0:
+            st.info("No parts added yet")
+
+        else:
+
+            for i, item in enumerate(bom):
+
+                col1, col2, col3 = st.columns([4,2,1])
+
+                col1.write(item["part"])
+                col2.write(f"Qty: {item['qty']}")
+
+                if col3.button("❌", key=f"remove_bom_{i}"):
+
+                    st.session_state.products[product_name].pop(i)
+
+                    save_data()
+
+                    st.success("Part removed")
+
+                    st.rerun()
 
 
 # -----------------------
