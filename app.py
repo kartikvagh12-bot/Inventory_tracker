@@ -292,14 +292,37 @@ if menu == "Add Stock":
 
 if menu == "Create Product":
 
-    st.header("Create Product")
+    st.header("Create / Edit Product")
 
-    product_name = st.text_input("Product Name")
-
-    if not st.session_state.parts:
+    if len(st.session_state.parts) == 0:
         st.warning("Add parts first")
 
     else:
+
+        # -----------------------
+        # SELECT OR CREATE PRODUCT
+        # -----------------------
+
+        product_list = list(st.session_state.products.keys())
+
+        selected_product = st.selectbox(
+            "Select Existing Product (or create new)",
+            ["Create New Product"] + product_list
+        )
+
+        if selected_product == "Create New Product":
+
+            product_name = st.text_input("New Product Name")
+
+        else:
+
+            product_name = selected_product
+
+            st.info(f"Editing product: {product_name}")
+
+        # -----------------------
+        # ADD PART TO PRODUCT
+        # -----------------------
 
         part_names = [p["name"] for p in st.session_state.parts]
 
@@ -309,7 +332,20 @@ if menu == "Create Product":
 
         if st.button("Add Part to Product"):
 
-            st.session_state.products.setdefault(product_name, []).append({
+            if product_name.strip() == "":
+                st.error("Enter product name")
+                st.stop()
+
+            if product_name not in st.session_state.products:
+                st.session_state.products[product_name] = []
+
+            # Prevent duplicate parts
+            for item in st.session_state.products[product_name]:
+                if item["part"] == part:
+                    st.error("Part already exists in this product")
+                    st.stop()
+
+            st.session_state.products[product_name].append({
                 "part": part,
                 "qty": qty
             })
@@ -318,26 +354,40 @@ if menu == "Create Product":
 
             st.success("Part added to product")
 
-    if product_name in st.session_state.products:
+            st.rerun()
 
-        st.subheader("Product Parts")
+        # -----------------------
+        # SHOW PRODUCT BOM
+        # -----------------------
 
-        bom = st.session_state.products[product_name]
+        if product_name in st.session_state.products:
 
-        for i, item in enumerate(bom):
+            st.divider()
+            st.subheader("Parts in Product")
 
-            col1, col2, col3 = st.columns([4,2,1])
+            bom = st.session_state.products[product_name]
 
-            col1.write(item["part"])
-            col2.write(f"Qty: {item['qty']}")
+            if len(bom) == 0:
+                st.info("No parts added yet")
 
-            if col3.button("❌", key=f"bom_delete_{i}"):
+            else:
 
-                bom.pop(i)
+                for i, item in enumerate(bom):
 
-                save_data()
+                    col1, col2, col3 = st.columns([4,2,1])
 
-                st.rerun()
+                    col1.write(item["part"])
+                    col2.write(f"Qty: {item['qty']}")
+
+                    if col3.button("❌", key=f"remove_bom_{product_name}_{i}"):
+
+                        st.session_state.products[product_name].pop(i)
+
+                        save_data()
+
+                        st.success("Part removed")
+
+                        st.rerun()
 
 
 # -----------------------
