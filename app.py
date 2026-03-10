@@ -596,10 +596,12 @@ if menu == "Inventory":
                     "New Stock": new_stock,
                     "Reason": "Manual Adjustment"
                 })
-
-    save_data()
-
-    st.success("Inventory updated")
+    
+        save_data()
+    
+        st.success("Inventory updated")
+    
+        st.rerun()
 
 
 # -----------------------
