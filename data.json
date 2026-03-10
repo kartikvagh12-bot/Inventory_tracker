@@ -9,6 +9,11 @@
       "name": "Back support",
       "stock": 100,
       "alert": 20
+    },
+    {
+      "name": "Arm rest",
+      "stock": 200,
+      "alert": 40
     }
   ],
   "products": {},
