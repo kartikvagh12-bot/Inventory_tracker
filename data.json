@@ -1,17 +1,6 @@
 {
   "parts": [],
-  "products": {
-    "Chair": [
-      {
-        "part": "Seat",
-        "qty": 1
-      },
-      {
-        "part": "Back support",
-        "qty": 1
-      }
-    ]
-  },
+  "products": {},
   "production_log": [],
   "inventory_log": []
 }
