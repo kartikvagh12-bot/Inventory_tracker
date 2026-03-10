@@ -132,6 +132,35 @@ total_parts = len(st.session_state.parts)
 total_products = len(st.session_state.products)
 total_runs = len(st.session_state.production_log)
 
+# -----------------------
+# TODAY PRODUCTION SUMMARY
+# -----------------------
+
+today = datetime.now().strftime("%Y-%m-%d")
+
+today_runs = 0
+today_units = 0
+product_counts = {}
+
+for run in st.session_state.production_log:
+
+    if run["time"].startswith(today):
+
+        today_runs += 1
+        today_units += run["qty"]
+
+    product = run["product"]
+
+    product_counts[product] = product_counts.get(product, 0) + run["qty"]
+
+most_product = max(product_counts, key=product_counts.get) if product_counts else "None"
+
+col1, col2, col3 = st.columns(3)
+
+col1.metric("Today's Production Runs", today_runs)
+col2.metric("Units Produced Today", today_units)
+col3.metric("Most Produced Product", most_product)
+
 low_stock = sum(1 for p in st.session_state.parts if p["stock"] <= p["alert"])
 
 col1, col2, col3, col4 = st.columns(4)
@@ -411,6 +440,13 @@ if menu == "Run Production":
 
             bom = st.session_state.products[product]
 
+            production_record = {
+                "product": product,
+                "qty": qty,
+                "time": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                "parts_used": []
+            }
+
             shortages = []
 
             for item in bom:
@@ -443,6 +479,11 @@ if menu == "Run Production":
 
                         p["stock"] -= required
 
+                        production_record["parts_used"].append({
+                            "part": p["name"],
+                            "qty": required
+                        })
+
                         st.session_state.inventory_log.append({
                             "Time": datetime.now().strftime("%Y-%m-%d %H:%M"),
                             "Part": p["name"],
@@ -452,11 +493,7 @@ if menu == "Run Production":
                             "Reason": f"Production: {product}"
                         })
 
-            st.session_state.production_log.append({
-                "product": product,
-                "qty": qty,
-                "time": datetime.now().strftime("%Y-%m-%d %H:%M")
-            })
+            st.session_state.production_log.append(production_record)
 
             save_data()
 
@@ -479,19 +516,28 @@ if menu == "Inventory":
 
         # LOW STOCK ALERTS
     st.subheader("Low Stock Alerts")
-    
+
     low_found = False
     
     for part in st.session_state.parts:
     
         if part["stock"] <= part["alert"]:
     
+            used_in = []
+    
+            for product, bom in st.session_state.products.items():
+                for item in bom:
+                    if item["part"] == part["name"]:
+                        used_in.append(product)
+    
+            product_list = ", ".join(used_in) if used_in else "No products"
+    
             st.error(
-                f"⚠ {part['name']} LOW STOCK — Remaining: {part['stock']}"
+                f"⚠ {part['name']} LOW STOCK — Remaining: {part['stock']} | Used in: {product_list}"
             )
     
             low_found = True
-    
+     
     if not low_found:
         st.success("All inventory levels are healthy")
 
@@ -566,7 +612,22 @@ if menu == "Production History":
 
     else:
 
-        df = pd.DataFrame(st.session_state.production_log)
+        history = []
+
+        for item in st.session_state.production_log:
+        
+            parts_used = ", ".join(
+                [f"{p['part']} ({p['qty']})" for p in item.get("parts_used", [])]
+            )
+        
+            history.append({
+                "Product": item["product"],
+                "Quantity": item["qty"],
+                "Materials Used": parts_used,
+                "Time": item["time"]
+            })
+        
+        df = pd.DataFrame(history)
 
         df.index += 1
 
