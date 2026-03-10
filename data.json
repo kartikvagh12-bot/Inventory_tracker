@@ -77,6 +77,10 @@
       {
         "part": "Table top",
         "qty": 1
+      },
+      {
+        "part": "Table frame",
+        "qty": 1
       }
     ]
   },
