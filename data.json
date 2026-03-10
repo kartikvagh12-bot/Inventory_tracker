@@ -4,6 +4,11 @@
       "name": "Seat",
       "stock": 100,
       "alert": 20
+    },
+    {
+      "name": "Back support",
+      "stock": 100,
+      "alert": 20
     }
   ],
   "products": {},
