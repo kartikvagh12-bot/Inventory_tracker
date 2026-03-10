@@ -244,7 +244,7 @@ if menu == "Add Parts":
 
             st.session_state.parts.append(new_part)
             st.session_state.inventory_log.append({
-                "Time": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                "Time": datetime.now().strftime("%Y-%m-%d %I:%M %p"),
                 "Part": name,
                 "Previous Stock": 0,
                 "Change": stock,
@@ -328,7 +328,7 @@ if menu == "Add Stock":
                     p["stock"] += qty
 
                     st.session_state.inventory_log.append({
-                        "Time": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                        "Time": datetime.now().strftime("%Y-%m-%d %I:%M %p"),
                         "Part": selected,
                         "Previous Stock": previous,
                         "Change": qty,
@@ -469,7 +469,7 @@ if menu == "Run Production":
             production_record = {
                 "product": product,
                 "qty": qty,
-                "time": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                "time": datetime.now().strftime("%Y-%m-%d %I:%M %p"),
                 "parts_used": []
             }
 
@@ -511,7 +511,7 @@ if menu == "Run Production":
                         })
 
                         st.session_state.inventory_log.append({
-                            "Time": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                            "Time": datetime.now().strftime("%Y-%m-%d %I:%M %p"),
                             "Part": p["name"],
                             "Previous Stock": previous,
                             "Change": -required,
@@ -601,7 +601,7 @@ if menu == "Inventory":
                 p["stock"] = new_stock
     
                 st.session_state.inventory_log.append({
-                    "Time": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                    "Time": datetime.now().strftime("%Y-%m-%d %I:%M %p"),
                     "Part": p["name"],
                     "Previous Stock": previous_stock,
                     "Change": change,
