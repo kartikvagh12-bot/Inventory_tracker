@@ -197,7 +197,7 @@ if menu == "Add Parts":
     stock = st.number_input("Initial Stock", min_value=0)
     alert = st.number_input("Low Stock Alert Level", min_value=0)
 
-    if st.button("Add Part"):
+    if st.button("Add Part", type="primary"):
 
         if name == "":
             st.error("Enter part name")
