@@ -65,6 +65,10 @@
       {
         "part": "Wheel arms",
         "qty": 5
+      },
+      {
+        "part": "Center stand",
+        "qty": 1
       }
     ]
   },
