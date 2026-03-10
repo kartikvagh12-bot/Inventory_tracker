@@ -29,6 +29,11 @@
       "name": "Wheel arm",
       "stock": 400,
       "alert": 40
+    },
+    {
+      "name": "Bolts",
+      "stock": 500,
+      "alert": 50
     }
   ],
   "products": {},
