@@ -36,7 +36,14 @@
       "alert": 50
     }
   ],
-  "products": {},
+  "products": {
+    "Chair": [
+      {
+        "part": "Seat",
+        "qty": 1
+      }
+    ]
+  },
   "production_log": [],
   "inventory_log": []
 }
