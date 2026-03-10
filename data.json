@@ -2,32 +2,32 @@
   "parts": [
     {
       "name": "Seat",
-      "stock": 80,
+      "stock": 50,
       "alert": 20
     },
     {
       "name": "Back support",
-      "stock": 80,
+      "stock": 50,
       "alert": 20
     },
     {
       "name": "Arm rest",
-      "stock": 160,
+      "stock": 100,
       "alert": 40
     },
     {
       "name": "Wheels",
-      "stock": 400,
+      "stock": 250,
       "alert": 50
     },
     {
       "name": "Wheel arms",
-      "stock": 400,
+      "stock": 250,
       "alert": 50
     },
     {
       "name": "Centre stand",
-      "stock": 80,
+      "stock": 50,
       "alert": 20
     }
   ],
@@ -64,6 +64,11 @@
       "product": "Chair",
       "qty": 20,
       "time": "2026-03-10 18:07"
+    },
+    {
+      "product": "Chair",
+      "qty": 30,
+      "time": "2026-03-10 18:08"
     }
   ],
   "inventory_log": [
@@ -113,6 +118,54 @@
       "Previous Stock": 100,
       "Change": -20,
       "New Stock": 80,
+      "Reason": "Production: Chair"
+    },
+    {
+      "Time": "2026-03-10 18:08",
+      "Part": "Seat",
+      "Previous Stock": 80,
+      "Change": -30,
+      "New Stock": 50,
+      "Reason": "Production: Chair"
+    },
+    {
+      "Time": "2026-03-10 18:08",
+      "Part": "Back support",
+      "Previous Stock": 80,
+      "Change": -30,
+      "New Stock": 50,
+      "Reason": "Production: Chair"
+    },
+    {
+      "Time": "2026-03-10 18:08",
+      "Part": "Arm rest",
+      "Previous Stock": 160,
+      "Change": -60,
+      "New Stock": 100,
+      "Reason": "Production: Chair"
+    },
+    {
+      "Time": "2026-03-10 18:08",
+      "Part": "Wheels",
+      "Previous Stock": 400,
+      "Change": -150,
+      "New Stock": 250,
+      "Reason": "Production: Chair"
+    },
+    {
+      "Time": "2026-03-10 18:08",
+      "Part": "Wheel arms",
+      "Previous Stock": 400,
+      "Change": -150,
+      "New Stock": 250,
+      "Reason": "Production: Chair"
+    },
+    {
+      "Time": "2026-03-10 18:08",
+      "Part": "Centre stand",
+      "Previous Stock": 80,
+      "Change": -30,
+      "New Stock": 50,
       "Reason": "Production: Chair"
     }
   ]
