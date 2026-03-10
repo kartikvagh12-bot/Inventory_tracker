@@ -39,6 +39,11 @@
       "name": "Table top",
       "stock": 200,
       "alert": 20
+    },
+    {
+      "name": "Table frame",
+      "stock": 200,
+      "alert": 20
     }
   ],
   "products": {
