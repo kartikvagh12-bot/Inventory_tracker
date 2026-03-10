@@ -1,11 +1,5 @@
 {
-  "parts": [
-    {
-      "name": "Back support",
-      "stock": 100,
-      "alert": 20
-    }
-  ],
+  "parts": [],
   "products": {
     "Chair": [
       {
