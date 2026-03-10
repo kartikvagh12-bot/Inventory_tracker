@@ -27,7 +27,7 @@
     },
     {
       "name": "Centre stand",
-      "stock": 10,
+      "stock": 110,
       "alert": 20
     }
   ],
@@ -259,6 +259,14 @@
       "Previous Stock": 50,
       "Change": 200,
       "New Stock": 250,
+      "Reason": "Stock Added"
+    },
+    {
+      "Time": "2026-03-10 18:19",
+      "Part": "Centre stand",
+      "Previous Stock": 10,
+      "Change": 100,
+      "New Stock": 110,
       "Reason": "Stock Added"
     }
   ]
