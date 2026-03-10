@@ -32,17 +32,17 @@
     },
     {
       "name": "Table top",
-      "stock": 70,
+      "stock": 20,
       "alert": 20
     },
     {
       "name": "Table frame",
-      "stock": 70,
+      "stock": 20,
       "alert": 20
     },
     {
       "name": "Table legs",
-      "stock": 280,
+      "stock": 80,
       "alert": 50
     }
   ],
@@ -108,6 +108,11 @@
       "product": "Table",
       "qty": 30,
       "time": "2026-03-10 18:42"
+    },
+    {
+      "product": "Table",
+      "qty": 50,
+      "time": "2026-03-10 18:46"
     }
   ],
   "inventory_log": [
@@ -325,6 +330,30 @@
       "Previous Stock": 400,
       "Change": -120,
       "New Stock": 280,
+      "Reason": "Production: Table"
+    },
+    {
+      "Time": "2026-03-10 18:46",
+      "Part": "Table top",
+      "Previous Stock": 70,
+      "Change": -50,
+      "New Stock": 20,
+      "Reason": "Production: Table"
+    },
+    {
+      "Time": "2026-03-10 18:46",
+      "Part": "Table frame",
+      "Previous Stock": 70,
+      "Change": -50,
+      "New Stock": 20,
+      "Reason": "Production: Table"
+    },
+    {
+      "Time": "2026-03-10 18:46",
+      "Part": "Table legs",
+      "Previous Stock": 280,
+      "Change": -200,
+      "New Stock": 80,
       "Reason": "Production: Table"
     }
   ]
