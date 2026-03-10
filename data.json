@@ -29,6 +29,11 @@
       "name": "Center stand",
       "stock": 200,
       "alert": 20
+    },
+    {
+      "name": "Bolts",
+      "stock": 500,
+      "alert": 50
     }
   ],
   "products": {},
