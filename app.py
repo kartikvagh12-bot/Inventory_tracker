@@ -583,6 +583,10 @@ if menu == "Inventory":
             if p["name"] == selected:
     
                 previous_stock = p["stock"]
+                
+                if new_stock == previous_stock:
+                    st.warning("Stock already at this level")
+                    st.stop()
     
                 change = new_stock - previous_stock
     
