@@ -41,6 +41,10 @@
       {
         "part": "Seat",
         "qty": 1
+      },
+      {
+        "part": "Back Support",
+        "qty": 1
       }
     ]
   },
