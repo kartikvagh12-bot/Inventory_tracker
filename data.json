@@ -9,6 +9,11 @@
       "name": "Back Support",
       "stock": 100,
       "alert": 20
+    },
+    {
+      "name": "Wheels",
+      "stock": 400,
+      "alert": 50
     }
   ],
   "products": {},
