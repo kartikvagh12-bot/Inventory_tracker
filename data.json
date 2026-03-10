@@ -19,6 +19,11 @@
       "name": "Wheels",
       "stock": 400,
       "alert": 50
+    },
+    {
+      "name": "Wheels arms",
+      "stock": 400,
+      "alert": 40
     }
   ],
   "products": {},
