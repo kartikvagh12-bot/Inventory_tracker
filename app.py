@@ -243,6 +243,14 @@ if menu == "Add Parts":
             }
 
             st.session_state.parts.append(new_part)
+            st.session_state.inventory_log.append({
+                "Time": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                "Part": name,
+                "Previous Stock": 0,
+                "Change": stock,
+                "New Stock": stock,
+                "Reason": "Part Created"
+            })
             st.session_state.temp_parts.append(new_part)
 
             save_data()
