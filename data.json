@@ -45,6 +45,10 @@
       {
         "part": "Seat",
         "qty": 1
+      },
+      {
+        "part": "Seat",
+        "qty": 1
       }
     ]
   },
