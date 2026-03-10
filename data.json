@@ -39,6 +39,11 @@
       "name": "Table frame",
       "stock": 100,
       "alert": 20
+    },
+    {
+      "name": "Table legs",
+      "stock": 400,
+      "alert": 50
     }
   ],
   "products": {
