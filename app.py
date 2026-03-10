@@ -3,6 +3,7 @@ import pandas as pd
 import json
 import os
 from datetime import datetime
+from zoneinfo import ZoneInfo
 import requests
 import base64
 
@@ -136,7 +137,7 @@ total_runs = len(st.session_state.production_log)
 # TODAY PRODUCTION SUMMARY
 # -----------------------
 
-today = datetime.now().strftime("%Y-%m-%d")
+today = datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d")
 
 today_runs = 0
 today_units = 0
@@ -244,7 +245,7 @@ if menu == "Add Parts":
 
             st.session_state.parts.append(new_part)
             st.session_state.inventory_log.append({
-                "Time": datetime.now().strftime("%Y-%m-%d %I:%M %p"),
+                "Time": datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d %I:%M %p"),
                 "Part": name,
                 "Previous Stock": 0,
                 "Change": stock,
@@ -328,7 +329,7 @@ if menu == "Add Stock":
                     p["stock"] += qty
 
                     st.session_state.inventory_log.append({
-                        "Time": datetime.now().strftime("%Y-%m-%d %I:%M %p"),
+                        "Time": datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d %I:%M %p"),
                         "Part": selected,
                         "Previous Stock": previous,
                         "Change": qty,
@@ -469,7 +470,7 @@ if menu == "Run Production":
             production_record = {
                 "product": product,
                 "qty": qty,
-                "time": datetime.now().strftime("%Y-%m-%d %I:%M %p"),
+                "time": datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d %I:%M %p"),
                 "parts_used": []
             }
 
@@ -511,7 +512,7 @@ if menu == "Run Production":
                         })
 
                         st.session_state.inventory_log.append({
-                            "Time": datetime.now().strftime("%Y-%m-%d %I:%M %p"),
+                            "Time": datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d %I:%M %p"),
                             "Part": p["name"],
                             "Previous Stock": previous,
                             "Change": -required,
@@ -601,7 +602,7 @@ if menu == "Inventory":
                 p["stock"] = new_stock
     
                 st.session_state.inventory_log.append({
-                    "Time": datetime.now().strftime("%Y-%m-%d %I:%M %p"),
+                    "Time": datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d %I:%M %p"),
                     "Part": p["name"],
                     "Previous Stock": previous_stock,
                     "Change": change,
