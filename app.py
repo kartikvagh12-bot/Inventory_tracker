@@ -221,9 +221,6 @@ if menu == "Add Parts":
         if name.strip() == "":
             st.error("Enter part name")
 
-        elif any(p["name"] == name for p in st.session_state.parts):
-            st.error("Part already exists")
-
         else:
 
             st.session_state.parts.append({
@@ -233,18 +230,25 @@ if menu == "Add Parts":
             })
 
             save_data()
+
             st.success("Part added")
+
             st.rerun()
 
-    st.divider()
-    st.subheader("Existing Parts")
+    # -----------------------
+    # Recently Added Parts
+    # -----------------------
 
-    if not st.session_state.parts:
+    st.divider()
+    st.subheader("Recently Added Parts")
+
+    if len(st.session_state.parts) == 0:
+
         st.info("No parts added yet")
 
     else:
 
-        for i, part in enumerate(st.session_state.parts):
+        for i, part in reversed(list(enumerate(st.session_state.parts))):
 
             col1, col2, col3, col4 = st.columns([4,2,2,1])
 
@@ -257,8 +261,6 @@ if menu == "Add Parts":
                 st.session_state.parts.pop(i)
 
                 save_data()
-
-                st.success("Part removed")
 
                 st.rerun()
 
