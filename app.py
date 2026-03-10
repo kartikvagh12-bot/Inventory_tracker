@@ -21,7 +21,9 @@ def upload_to_github(data):
 
     url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{FILE_PATH}"
 
-    headers = {"Authorization": f"token {GITHUB_TOKEN}"}
+    headers = {
+        "Authorization": f"token {GITHUB_TOKEN}"
+    }
 
     content = base64.b64encode(
         json.dumps(data, indent=2).encode()
@@ -46,11 +48,7 @@ def upload_to_github(data):
 # PAGE CONFIG
 # -----------------------
 
-st.set_page_config(
-    page_title="Production & Inventory Manager",
-    page_icon="🏭",
-    layout="wide"
-)
+st.set_page_config(page_title="Production & Inventory Manager", page_icon="🏭", layout="wide")
 
 st.title("🏭 Production & Inventory Manager")
 st.caption("Smart stock and production tracking for manufacturing")
@@ -122,6 +120,9 @@ if "production_log" not in st.session_state:
 if "inventory_log" not in st.session_state:
     st.session_state.inventory_log = data.get("inventory_log", [])
 
+if "temp_parts" not in st.session_state:
+    st.session_state.temp_parts = []
+
 
 # -----------------------
 # DASHBOARD
@@ -144,6 +145,25 @@ st.divider()
 
 
 # -----------------------
+# RESET
+# -----------------------
+
+if st.sidebar.button("Reset All Data"):
+
+    st.session_state.parts = []
+    st.session_state.products = {}
+    st.session_state.production_log = []
+    st.session_state.inventory_log = []
+    st.session_state.temp_parts = []
+
+    save_data()
+
+    st.success("All data reset")
+
+    st.rerun()
+
+
+# -----------------------
 # MENU
 # -----------------------
 
@@ -159,6 +179,10 @@ menu = st.sidebar.radio(
         "Production History"
     ]
 )
+
+# clear temporary list when leaving page
+if menu != "Add Parts":
+    st.session_state.temp_parts = []
 
 
 # -----------------------
@@ -183,11 +207,14 @@ if menu == "Add Parts":
 
         else:
 
-            st.session_state.parts.append({
+            new_part = {
                 "name": name,
                 "stock": stock,
                 "alert": alert
-            })
+            }
+
+            st.session_state.parts.append(new_part)
+            st.session_state.temp_parts.append(new_part)
 
             save_data()
 
@@ -196,9 +223,9 @@ if menu == "Add Parts":
             st.rerun()
 
     st.divider()
-    st.subheader("Recently Added Parts")
+    st.subheader("Recently Added")
 
-    for i, part in reversed(list(enumerate(st.session_state.parts))):
+    for i, part in reversed(list(enumerate(st.session_state.temp_parts))):
 
         col1, col2, col3, col4 = st.columns([4,2,2,1])
 
@@ -206,9 +233,10 @@ if menu == "Add Parts":
         col2.write(f"Stock: {part['stock']}")
         col3.write(f"Alert: {part['alert']}")
 
-        if col4.button("❌", key=f"delete_{i}"):
+        if col4.button("❌", key=f"temp_delete_{i}"):
 
-            st.session_state.parts.pop(i)
+            st.session_state.parts.remove(part)
+            st.session_state.temp_parts.pop(i)
 
             save_data()
 
@@ -223,12 +251,12 @@ if menu == "Add Stock":
 
     st.header("Add Stock")
 
-    part_names = [p["name"] for p in st.session_state.parts]
-
-    if not part_names:
+    if not st.session_state.parts:
         st.warning("Add parts first")
 
     else:
+
+        part_names = [p["name"] for p in st.session_state.parts]
 
         selected = st.selectbox("Part", part_names)
 
@@ -256,6 +284,133 @@ if menu == "Add Stock":
             save_data()
 
             st.success("Stock updated")
+
+
+# -----------------------
+# CREATE PRODUCT
+# -----------------------
+
+if menu == "Create Product":
+
+    st.header("Create Product")
+
+    product_name = st.text_input("Product Name")
+
+    if not st.session_state.parts:
+        st.warning("Add parts first")
+
+    else:
+
+        part_names = [p["name"] for p in st.session_state.parts]
+
+        part = st.selectbox("Part", part_names)
+
+        qty = st.number_input("Quantity Needed", min_value=1)
+
+        if st.button("Add Part to Product"):
+
+            st.session_state.products.setdefault(product_name, []).append({
+                "part": part,
+                "qty": qty
+            })
+
+            save_data()
+
+            st.success("Part added to product")
+
+    if product_name in st.session_state.products:
+
+        st.subheader("Product Parts")
+
+        bom = st.session_state.products[product_name]
+
+        for i, item in enumerate(bom):
+
+            col1, col2, col3 = st.columns([4,2,1])
+
+            col1.write(item["part"])
+            col2.write(f"Qty: {item['qty']}")
+
+            if col3.button("❌", key=f"bom_delete_{i}"):
+
+                bom.pop(i)
+
+                save_data()
+
+                st.rerun()
+
+
+# -----------------------
+# RUN PRODUCTION
+# -----------------------
+
+if menu == "Run Production":
+
+    st.header("Run Production")
+
+    if not st.session_state.products:
+        st.warning("Create product first")
+
+    else:
+
+        product = st.selectbox("Product", list(st.session_state.products.keys()))
+
+        qty = st.number_input("Quantity Produced", min_value=1)
+
+        if st.button("Run Production"):
+
+            bom = st.session_state.products[product]
+
+            shortages = []
+
+            for item in bom:
+
+                required = item["qty"] * qty
+
+                part = next(p for p in st.session_state.parts if p["name"] == item["part"])
+
+                if part["stock"] < required:
+                    shortages.append(f"{item['part']} (need {required}, have {part['stock']})")
+
+            if shortages:
+
+                st.error("Insufficient stock:")
+
+                for s in shortages:
+                    st.write("•", s)
+
+                st.stop()
+
+            for item in bom:
+
+                required = item["qty"] * qty
+
+                for p in st.session_state.parts:
+
+                    if p["name"] == item["part"]:
+
+                        previous = p["stock"]
+
+                        p["stock"] -= required
+
+                        st.session_state.inventory_log.append({
+                            "Time": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                            "Part": p["name"],
+                            "Previous Stock": previous,
+                            "Change": -required,
+                            "New Stock": p["stock"],
+                            "Reason": f"Production: {product}"
+                        })
+
+            st.session_state.production_log.append({
+                "product": product,
+                "qty": qty,
+                "time": datetime.now().strftime("%Y-%m-%d %H:%M")
+            })
+
+            save_data()
+
+            st.success("Production completed")
 
 
 # -----------------------
@@ -294,12 +449,69 @@ if menu == "Inventory":
         for p in st.session_state.parts:
 
             if p["name"] == selected:
-
                 p["stock"] = new_stock
 
         save_data()
 
         st.success("Inventory updated")
+
+
+# -----------------------
+# INVENTORY HISTORY
+# -----------------------
+
+if menu == "Inventory History":
+
+    st.header("Inventory History")
+
+    if not st.session_state.inventory_log:
+        st.info("No inventory changes recorded yet")
+
+    else:
+
+        df = pd.DataFrame(st.session_state.inventory_log)
+
+        df.index += 1
+
+        st.dataframe(df, use_container_width=True)
+
+        csv = df.to_csv(index=False).encode('utf-8')
+
+        st.download_button(
+            label="Download Inventory History (CSV)",
+            data=csv,
+            file_name="inventory_history.csv",
+            mime="text/csv"
+        )
+
+
+# -----------------------
+# PRODUCTION HISTORY
+# -----------------------
+
+if menu == "Production History":
+
+    st.header("Production History")
+
+    if not st.session_state.production_log:
+        st.info("No production recorded yet")
+
+    else:
+
+        df = pd.DataFrame(st.session_state.production_log)
+
+        df.index += 1
+
+        st.dataframe(df, use_container_width=True)
+
+        csv = df.to_csv(index=False).encode('utf-8')
+
+        st.download_button(
+            label="Download Production Report (CSV)",
+            data=csv,
+            file_name="production_report.csv",
+            mime="text/csv"
+        )
 
 
 # -----------------------
