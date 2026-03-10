@@ -19,6 +19,11 @@
       "name": "Arm rest",
       "stock": 200,
       "alert": 30
+    },
+    {
+      "name": "Wheel arms",
+      "stock": 400,
+      "alert": 50
     }
   ],
   "products": {},
