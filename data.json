@@ -1,62 +1,6 @@
 {
-  "parts": [
-    {
-      "name": "Seat",
-      "stock": 100,
-      "alert": 20
-    },
-    {
-      "name": "Back Support",
-      "stock": 100,
-      "alert": 20
-    },
-    {
-      "name": "Arm rest",
-      "stock": 200,
-      "alert": 40
-    },
-    {
-      "name": "Centre stand",
-      "stock": 100,
-      "alert": 20
-    },
-    {
-      "name": "Wheels",
-      "stock": 500,
-      "alert": 50
-    },
-    {
-      "name": "Wheel arm",
-      "stock": 400,
-      "alert": 40
-    },
-    {
-      "name": "Bolts",
-      "stock": 500,
-      "alert": 50
-    },
-    {
-      "name": "Screws",
-      "stock": 1000,
-      "alert": 100
-    }
-  ],
-  "products": {
-    "Chair": [
-      {
-        "part": "Seat",
-        "qty": 1
-      },
-      {
-        "part": "Back Support",
-        "qty": 1
-      },
-      {
-        "part": "Arm rest",
-        "qty": 1
-      }
-    ]
-  },
+  "parts": [],
+  "products": {},
   "production_log": [],
   "inventory_log": []
 }
