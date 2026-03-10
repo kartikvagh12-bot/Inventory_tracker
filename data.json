@@ -72,6 +72,12 @@
         "part": "Centre stand",
         "qty": 1
       }
+    ],
+    "Table": [
+      {
+        "part": "Table top",
+        "qty": 1
+      }
     ]
   },
   "production_log": [
