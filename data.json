@@ -7,7 +7,7 @@
     },
     {
       "name": "Back support",
-      "stock": 10,
+      "stock": 110,
       "alert": 20
     },
     {
@@ -224,6 +224,14 @@
     {
       "Time": "2026-03-10 18:18",
       "Part": "Seat",
+      "Previous Stock": 10,
+      "Change": 100,
+      "New Stock": 110,
+      "Reason": "Stock Added"
+    },
+    {
+      "Time": "2026-03-10 18:18",
+      "Part": "Back support",
       "Previous Stock": 10,
       "Change": 100,
       "New Stock": 110,
