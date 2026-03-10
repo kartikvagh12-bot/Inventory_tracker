@@ -22,7 +22,7 @@
     },
     {
       "name": "Wheel arms",
-      "stock": 50,
+      "stock": 250,
       "alert": 50
     },
     {
@@ -251,6 +251,14 @@
       "Previous Stock": 50,
       "Change": 400,
       "New Stock": 450,
+      "Reason": "Stock Added"
+    },
+    {
+      "Time": "2026-03-10 18:19",
+      "Part": "Wheel arms",
+      "Previous Stock": 50,
+      "Change": 200,
+      "New Stock": 250,
       "Reason": "Stock Added"
     }
   ]
