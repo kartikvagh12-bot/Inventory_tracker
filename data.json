@@ -32,7 +32,7 @@
     },
     {
       "name": "Bolts",
-      "stock": 500,
+      "stock": 1000,
       "alert": 50
     }
   ],
@@ -69,5 +69,14 @@
     ]
   },
   "production_log": [],
-  "inventory_log": []
+  "inventory_log": [
+    {
+      "Time": "2026-03-10 20:33",
+      "Part": "Bolts",
+      "Previous Stock": 500,
+      "Change": 500,
+      "New Stock": 1000,
+      "Reason": "Stock Added"
+    }
+  ]
 }
