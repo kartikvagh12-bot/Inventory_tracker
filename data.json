@@ -53,6 +53,10 @@
       {
         "part": "Wheels",
         "qty": 5
+      },
+      {
+        "part": "Wheels arms",
+        "qty": 5
       }
     ]
   },
