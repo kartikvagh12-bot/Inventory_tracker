@@ -34,6 +34,11 @@
       "name": "Bolts",
       "stock": 500,
       "alert": 50
+    },
+    {
+      "name": "Screws",
+      "stock": 1000,
+      "alert": 100
     }
   ],
   "products": {
