@@ -34,11 +34,6 @@
       "name": "Bolts",
       "stock": 1000,
       "alert": 100
-    },
-    {
-      "name": "Buld",
-      "stock": 200,
-      "alert": 30
     }
   ],
   "products": {},
