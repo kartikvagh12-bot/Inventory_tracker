@@ -39,6 +39,11 @@
       "name": "Chair",
       "stock": 0,
       "alert": 0
+    },
+    {
+      "name": "new",
+      "stock": 0,
+      "alert": 0
     }
   ],
   "products": {
@@ -435,6 +440,14 @@
       "Previous Stock": 0,
       "Change": 100,
       "New Stock": 100,
+      "Reason": "Part Created"
+    },
+    {
+      "Time": "2026-03-11 05:58 PM",
+      "Part": "new",
+      "Previous Stock": 0,
+      "Change": 0,
+      "New Stock": 0,
       "Reason": "Part Created"
     }
   ]
