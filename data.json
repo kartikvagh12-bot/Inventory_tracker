@@ -29,6 +29,11 @@
       "name": "Center stand",
       "stock": 100,
       "alert": 20
+    },
+    {
+      "name": "Bots",
+      "stock": 1000,
+      "alert": 100
     }
   ],
   "products": {},
@@ -88,6 +93,14 @@
       "Previous Stock": 0,
       "Change": 100,
       "New Stock": 100,
+      "Reason": "Part Created"
+    },
+    {
+      "Time": "2026-03-12 12:47 AM",
+      "Part": "Bots",
+      "Previous Stock": 0,
+      "Change": 1000,
+      "New Stock": 1000,
       "Reason": "Part Created"
     }
   ]
