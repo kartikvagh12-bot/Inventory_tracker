@@ -7,12 +7,12 @@
     },
     {
       "name": "Back support",
-      "stock": 100,
+      "stock": 70,
       "alert": 20
     },
     {
       "name": "Aem rest",
-      "stock": 200,
+      "stock": 140,
       "alert": 40
     },
     {
@@ -63,7 +63,23 @@
       }
     ]
   },
-  "production_log": [],
+  "production_log": [
+    {
+      "product": "Chair",
+      "qty": 30,
+      "time": "2026-03-11 11:00 PM",
+      "parts_used": [
+        {
+          "part": "Aem rest",
+          "qty": 60
+        },
+        {
+          "part": "Back support",
+          "qty": 30
+        }
+      ]
+    }
+  ],
   "inventory_log": [
     {
       "Time": "2026-03-11 09:15 PM",
@@ -136,6 +152,22 @@
       "Change": 200,
       "New Stock": 200,
       "Reason": "Part Created"
+    },
+    {
+      "Time": "2026-03-11 11:00 PM",
+      "Part": "Aem rest",
+      "Previous Stock": 200,
+      "Change": -60,
+      "New Stock": 140,
+      "Reason": "Production: Chair"
+    },
+    {
+      "Time": "2026-03-11 11:00 PM",
+      "Part": "Back support",
+      "Previous Stock": 100,
+      "Change": -30,
+      "New Stock": 70,
+      "Reason": "Production: Chair"
     }
   ]
 }
