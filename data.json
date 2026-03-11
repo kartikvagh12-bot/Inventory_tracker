@@ -45,6 +45,10 @@
       {
         "part": "Back support",
         "qty": 1
+      },
+      {
+        "part": "Bots",
+        "qty": 20
       }
     ]
   },
