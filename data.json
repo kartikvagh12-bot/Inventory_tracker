@@ -108,6 +108,10 @@
       {
         "part": "Table foot cap",
         "qty": 4
+      },
+      {
+        "part": "Bolts",
+        "qty": 10
       }
     ]
   },
