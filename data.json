@@ -1,11 +1,5 @@
 {
-  "parts": [
-    {
-      "name": "Seat",
-      "stock": 100,
-      "alert": 20
-    }
-  ],
+  "parts": [],
   "products": {},
   "production_log": [],
   "inventory_log": [
