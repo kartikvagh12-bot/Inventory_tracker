@@ -330,7 +330,7 @@ if menu == "Add Stock":
 
     else:
 
-        part_names = [p["name"] for p in st.session_state.parts]
+        part_names = sorted([p["name"] for p in st.session_state.parts])
 
         selected = st.selectbox("Part", part_names)
 
@@ -398,7 +398,7 @@ if menu == "Create Product":
         # ADD PART TO PRODUCT
         # -----------------------
 
-        part_names = [p["name"] for p in st.session_state.parts]
+        part_names = sorted([p["name"] for p in st.session_state.parts])
 
         part = st.selectbox("Part", part_names)
 
