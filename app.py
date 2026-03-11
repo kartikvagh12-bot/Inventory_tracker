@@ -433,9 +433,12 @@ if menu == "Create Product":
 
             if product_name not in st.session_state.products:
                 st.session_state.products[product_name] = []
-            elif product_name in st.session_state.products and selected_product == "Create New Product":
-                st.error("Product already exists")
+            if product_name.strip() == "":
+                st.error("Enter product name")
                 st.stop()
+            
+            if product_name not in st.session_state.products:
+                st.session_state.products[product_name] = []
 
             # Prevent duplicate parts
             for item in st.session_state.products[product_name]:
