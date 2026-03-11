@@ -344,7 +344,6 @@ if menu == "Add Stock":
             save_data()
 
             st.success("Stock updated")
-            st.rerun()
 
 
 # -----------------------
