@@ -2,37 +2,37 @@
   "parts": [
     {
       "name": "Seat",
-      "stock": 80,
+      "stock": 55,
       "alert": 20
     },
     {
       "name": "Back support",
-      "stock": 80,
+      "stock": 55,
       "alert": 20
     },
     {
       "name": "Arm rest",
-      "stock": 160,
+      "stock": 110,
       "alert": 40
     },
     {
       "name": "Wheels",
-      "stock": 400,
+      "stock": 275,
       "alert": 50
     },
     {
       "name": "Wheel arm",
-      "stock": 400,
+      "stock": 275,
       "alert": 50
     },
     {
       "name": "Center stand",
-      "stock": 80,
+      "stock": 55,
       "alert": 20
     },
     {
       "name": "Bots",
-      "stock": 600,
+      "stock": 100,
       "alert": 100
     }
   ],
@@ -101,6 +101,41 @@
         {
           "part": "Wheels",
           "qty": 100
+        }
+      ]
+    },
+    {
+      "product": "Chair",
+      "qty": 25,
+      "time": "2026-03-12 12:56 AM",
+      "parts_used": [
+        {
+          "part": "Arm rest",
+          "qty": 50
+        },
+        {
+          "part": "Back support",
+          "qty": 25
+        },
+        {
+          "part": "Bots",
+          "qty": 500
+        },
+        {
+          "part": "Center stand",
+          "qty": 25
+        },
+        {
+          "part": "Seat",
+          "qty": 25
+        },
+        {
+          "part": "Wheel arm",
+          "qty": 125
+        },
+        {
+          "part": "Wheels",
+          "qty": 125
         }
       ]
     }
@@ -224,6 +259,62 @@
       "Previous Stock": 500,
       "Change": -100,
       "New Stock": 400,
+      "Reason": "Production: Chair"
+    },
+    {
+      "Time": "2026-03-12 12:56 AM",
+      "Part": "Arm rest",
+      "Previous Stock": 160,
+      "Change": -50,
+      "New Stock": 110,
+      "Reason": "Production: Chair"
+    },
+    {
+      "Time": "2026-03-12 12:56 AM",
+      "Part": "Back support",
+      "Previous Stock": 80,
+      "Change": -25,
+      "New Stock": 55,
+      "Reason": "Production: Chair"
+    },
+    {
+      "Time": "2026-03-12 12:56 AM",
+      "Part": "Bots",
+      "Previous Stock": 600,
+      "Change": -500,
+      "New Stock": 100,
+      "Reason": "Production: Chair"
+    },
+    {
+      "Time": "2026-03-12 12:56 AM",
+      "Part": "Center stand",
+      "Previous Stock": 80,
+      "Change": -25,
+      "New Stock": 55,
+      "Reason": "Production: Chair"
+    },
+    {
+      "Time": "2026-03-12 12:56 AM",
+      "Part": "Seat",
+      "Previous Stock": 80,
+      "Change": -25,
+      "New Stock": 55,
+      "Reason": "Production: Chair"
+    },
+    {
+      "Time": "2026-03-12 12:56 AM",
+      "Part": "Wheel arm",
+      "Previous Stock": 400,
+      "Change": -125,
+      "New Stock": 275,
+      "Reason": "Production: Chair"
+    },
+    {
+      "Time": "2026-03-12 12:56 AM",
+      "Part": "Wheels",
+      "Previous Stock": 400,
+      "Change": -125,
+      "New Stock": 275,
       "Reason": "Production: Chair"
     }
   ]
