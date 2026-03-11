@@ -556,7 +556,7 @@ if menu == "Inventory":
 
     st.header("Inventory Dashboard")
 
-    df = pd.DataFrame(st.session_state.parts).sort_values("name")
+    df = pd.DataFrame(st.session_state.parts).sort_values("name").reset_index(drop=True)
 
     df.index += 1
 
@@ -600,7 +600,7 @@ if menu == "Inventory":
 
     st.subheader("Adjust Inventory")
 
-    part_names = [p["name"] for p in st.session_state.parts]
+    part_names = sorted([p["name"] for p in st.session_state.parts])
 
     selected = st.selectbox("Select Part", part_names)
 
