@@ -37,7 +37,7 @@
     },
     {
       "name": "Chair",
-      "stock": 0,
+      "stock": 1,
       "alert": 0
     }
   ],
@@ -499,6 +499,14 @@
       "Previous Stock": 10,
       "Change": -10,
       "New Stock": 0,
+      "Reason": "Manual Adjustment"
+    },
+    {
+      "Time": "2026-03-11 08:20 PM",
+      "Part": "Chair",
+      "Previous Stock": 0,
+      "Change": 1,
+      "New Stock": 1,
       "Reason": "Manual Adjustment"
     }
   ]
