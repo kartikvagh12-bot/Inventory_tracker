@@ -100,6 +100,10 @@
       {
         "part": "Table frame",
         "qty": 1
+      },
+      {
+        "part": "Table legs",
+        "qty": 4
       }
     ]
   },
