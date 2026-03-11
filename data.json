@@ -41,7 +41,14 @@
       "alert": 30
     }
   ],
-  "products": {},
+  "products": {
+    "Chair": [
+      {
+        "part": "Aem rest",
+        "qty": 2
+      }
+    ]
+  },
   "production_log": [],
   "inventory_log": [
     {
