@@ -606,21 +606,25 @@ if menu == "Inventory":
 
     new_stock = st.number_input("Set New Stock", min_value=0)
 
+    new_alert = st.number_input("Set Alert Limit", min_value=0)
+
     if st.button("Update Inventory"):
 
         for p in st.session_state.parts:
     
             if p["name"] == selected:
-    
+
                 previous_stock = p["stock"]
-                
-                if new_stock == previous_stock:
-                    st.warning("Stock already at this level")
+                previous_alert = p["alert"]
+            
+                if new_stock == previous_stock and new_alert == previous_alert:
+                    st.warning("No changes detected")
                     st.stop()
-    
+            
                 change = new_stock - previous_stock
-    
+            
                 p["stock"] = new_stock
+                p["alert"] = new_alert
     
                 st.session_state.inventory_log.append({
                     "Time": datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d %I:%M %p"),
