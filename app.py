@@ -340,6 +340,7 @@ if menu == "Add Stock":
             save_data()
 
             st.success("Stock updated")
+            st.rerun()
 
 
 # -----------------------
@@ -394,6 +395,9 @@ if menu == "Create Product":
 
             if product_name not in st.session_state.products:
                 st.session_state.products[product_name] = []
+            elif product_name in st.session_state.products and selected_product == "Create New Product":
+                st.error("Product already exists")
+                st.stop()
 
             # Prevent duplicate parts
             for item in st.session_state.products[product_name]:
@@ -535,7 +539,7 @@ if menu == "Inventory":
 
     st.header("Inventory Dashboard")
 
-    df = pd.DataFrame(st.session_state.parts)
+    df = pd.DataFrame(st.session_state.parts).sort_values("name")
 
     df.index += 1
 
@@ -630,7 +634,7 @@ if menu == "Inventory History":
 
     else:
 
-        df = pd.DataFrame(st.session_state.inventory_log)
+        df = pd.DataFrame(st.session_state.inventory_log).sort_values("Time", ascending=False)
 
         df.index += 1
 
@@ -674,7 +678,7 @@ if menu == "Production History":
                 "Time": item["time"]
             })
         
-        df = pd.DataFrame(history)
+        df = pd.DataFrame(history).sort_values("Time", ascending=False)
 
         df.index += 1
 
