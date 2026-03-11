@@ -196,19 +196,40 @@ st.divider()
 # RESET
 # -----------------------
 
+if "confirm_reset" not in st.session_state:
+    st.session_state.confirm_reset = False
+
+
 if st.sidebar.button("Reset All Data"):
 
-    st.session_state.parts = []
-    st.session_state.products = {}
-    st.session_state.production_log = []
-    st.session_state.inventory_log = []
-    st.session_state.temp_parts = []
+    st.session_state.confirm_reset = True
 
-    save_data()
 
-    st.success("All data reset")
+if st.session_state.confirm_reset:
 
-    st.rerun()
+    st.sidebar.warning("⚠ Are you sure you want to delete ALL data?")
+
+    col1, col2 = st.sidebar.columns(2)
+
+    if col1.button("Yes, Reset"):
+
+        st.session_state.parts = []
+        st.session_state.products = {}
+        st.session_state.production_log = []
+        st.session_state.inventory_log = []
+        st.session_state.temp_parts = []
+
+        save_data()
+
+        st.session_state.confirm_reset = False
+
+        st.success("All data reset")
+
+        st.rerun()
+
+    if col2.button("Cancel"):
+
+        st.session_state.confirm_reset = False
 
 
 # -----------------------
