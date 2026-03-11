@@ -589,10 +589,6 @@ if menu == "Inventory":
         df.index += 1
         st.dataframe(df, use_container_width=True)
 
-    df.index += 1
-
-    st.dataframe(df, use_container_width=True)
-
         # LOW STOCK ALERTS
     st.subheader("Low Stock Alerts")
 
