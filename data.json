@@ -39,11 +39,6 @@
       "name": "Chair",
       "stock": 0,
       "alert": 0
-    },
-    {
-      "name": "add",
-      "stock": 0,
-      "alert": 0
     }
   ],
   "products": {
