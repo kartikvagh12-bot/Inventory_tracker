@@ -44,6 +44,11 @@
       "name": "Table top",
       "stock": 100,
       "alert": 20
+    },
+    {
+      "name": "Table frame",
+      "stock": 100,
+      "alert": 20
     }
   ],
   "products": {
@@ -517,6 +522,14 @@
     {
       "Time": "2026-03-11 08:50 PM",
       "Part": "Table top",
+      "Previous Stock": 0,
+      "Change": 100,
+      "New Stock": 100,
+      "Reason": "Part Created"
+    },
+    {
+      "Time": "2026-03-11 08:51 PM",
+      "Part": "Table frame",
       "Previous Stock": 0,
       "Change": 100,
       "New Stock": 100,
