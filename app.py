@@ -14,12 +14,20 @@ st.markdown("""
     background-color: #000000;
 }
 
-[data-testid="stAppViewContainer"] {
-    background-color: #000000;
+h1, h2, h3 {
+    color: #f8fafc;
 }
 
-[data-testid="stHeader"] {
-    background-color: #000000;
+div[data-testid="stMetric"] {
+    background-color: #1e293b;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.stButton button {
+    background-color: #22c55e;
+    color: white;
+    border-radius: 8px;
 }
 
 </style>
