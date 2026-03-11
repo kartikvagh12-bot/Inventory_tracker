@@ -39,6 +39,11 @@
       "name": "Chair",
       "stock": 1,
       "alert": 0
+    },
+    {
+      "name": "Table top",
+      "stock": 100,
+      "alert": 20
     }
   ],
   "products": {
@@ -508,6 +513,14 @@
       "Change": 1,
       "New Stock": 1,
       "Reason": "Manual Adjustment"
+    },
+    {
+      "Time": "2026-03-11 08:50 PM",
+      "Part": "Table top",
+      "Previous Stock": 0,
+      "Change": 100,
+      "New Stock": 100,
+      "Reason": "Part Created"
     }
   ]
 }
