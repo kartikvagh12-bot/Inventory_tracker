@@ -32,7 +32,7 @@
     },
     {
       "name": "Bolts",
-      "stock": 1300,
+      "stock": 1100,
       "alert": 100
     },
     {
@@ -42,22 +42,22 @@
     },
     {
       "name": "Table top",
-      "stock": 100,
+      "stock": 80,
       "alert": 20
     },
     {
       "name": "Table frame",
-      "stock": 100,
+      "stock": 80,
       "alert": 20
     },
     {
       "name": "Table legs",
-      "stock": 400,
+      "stock": 320,
       "alert": 20
     },
     {
       "name": "Table foot cap",
-      "stock": 400,
+      "stock": 320,
       "alert": 40
     }
   ],
@@ -214,6 +214,33 @@
         {
           "part": "Center stand",
           "qty": 10
+        },
+        {
+          "part": "Bolts",
+          "qty": 200
+        }
+      ]
+    },
+    {
+      "product": "Table",
+      "qty": 20,
+      "time": "2026-03-11 09:03 PM",
+      "parts_used": [
+        {
+          "part": "Table top",
+          "qty": 20
+        },
+        {
+          "part": "Table frame",
+          "qty": 20
+        },
+        {
+          "part": "Table legs",
+          "qty": 80
+        },
+        {
+          "part": "Table foot cap",
+          "qty": 80
         },
         {
           "part": "Bolts",
@@ -590,6 +617,46 @@
       "Change": 300,
       "New Stock": 400,
       "Reason": "Manual Adjustment"
+    },
+    {
+      "Time": "2026-03-11 09:03 PM",
+      "Part": "Table top",
+      "Previous Stock": 100,
+      "Change": -20,
+      "New Stock": 80,
+      "Reason": "Production: Table"
+    },
+    {
+      "Time": "2026-03-11 09:03 PM",
+      "Part": "Table frame",
+      "Previous Stock": 100,
+      "Change": -20,
+      "New Stock": 80,
+      "Reason": "Production: Table"
+    },
+    {
+      "Time": "2026-03-11 09:03 PM",
+      "Part": "Table legs",
+      "Previous Stock": 400,
+      "Change": -80,
+      "New Stock": 320,
+      "Reason": "Production: Table"
+    },
+    {
+      "Time": "2026-03-11 09:03 PM",
+      "Part": "Table foot cap",
+      "Previous Stock": 400,
+      "Change": -80,
+      "New Stock": 320,
+      "Reason": "Production: Table"
+    },
+    {
+      "Time": "2026-03-11 09:03 PM",
+      "Part": "Bolts",
+      "Previous Stock": 1300,
+      "Change": -200,
+      "New Stock": 1100,
+      "Reason": "Production: Table"
     }
   ]
 }
