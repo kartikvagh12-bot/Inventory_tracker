@@ -19,7 +19,7 @@ h1, h2, h3 {
 }
 
 div[data-testid="stMetric"] {
-    background-color: #1e293b;
+    background-color: #D3D3D3;
     padding: 15px;
     border-radius: 10px;
 }
