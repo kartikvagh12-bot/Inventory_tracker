@@ -51,6 +51,12 @@
         "part": "Back support",
         "qty": 1
       }
+    ],
+    "Table": [
+      {
+        "part": "Bolts",
+        "qty": 20
+      }
     ]
   },
   "production_log": [],
