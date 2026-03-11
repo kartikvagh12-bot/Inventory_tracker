@@ -56,6 +56,10 @@
       {
         "part": "Bolts",
         "qty": 20
+      },
+      {
+        "part": "Bulb",
+        "qty": 20
       }
     ]
   },
