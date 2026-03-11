@@ -407,7 +407,7 @@ if menu == "Create Product":
 
         if selected_product == "Create New Product":
 
-            product_name = st.text_input("New Product Name")
+            product_name = st.text_input("New Product Name").strip()
 
         else:
 
