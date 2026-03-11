@@ -11,25 +11,6 @@ import base64
 # UI STYLE
 # -----------------------
 
-st.markdown("""
-<style>
-
-/* Normal buttons */
-.stButton button {
-    background-color: #22c55e;
-    color: white;
-    border-radius: 8px;
-}
-
-/* Delete buttons */
-button[kind="secondary"] {
-    background-color: #ef4444 !important;
-    color: white !important;
-}
-
-</style>
-""", unsafe_allow_html=True)
-
 DATA_FILE = "data.json"
 
 GITHUB_TOKEN = st.secrets["GITHUB_TOKEN"]
