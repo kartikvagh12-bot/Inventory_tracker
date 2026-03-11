@@ -224,7 +224,7 @@ if st.sidebar.button("Reset All Data"):
 # -----------------------
 
 menu = st.sidebar.radio(
-    "Navigation",
+    "Menu",
     [
         "📦 Add Parts",
         "➕ Add Stock",
