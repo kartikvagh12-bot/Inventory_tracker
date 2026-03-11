@@ -32,7 +32,7 @@
     },
     {
       "name": "Bolts",
-      "stock": 2000,
+      "stock": 3000,
       "alert": 100
     }
   ],
@@ -347,6 +347,14 @@
       "Previous Stock": 100,
       "Change": 50,
       "New Stock": 150,
+      "Reason": "Manual Adjustment"
+    },
+    {
+      "Time": "2026-03-11 11:34 PM",
+      "Part": "Bolts",
+      "Previous Stock": 2000,
+      "Change": 1000,
+      "New Stock": 3000,
       "Reason": "Manual Adjustment"
     }
   ]
