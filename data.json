@@ -29,6 +29,11 @@
       "name": "Centre stand",
       "stock": 100,
       "alert": 20
+    },
+    {
+      "name": "Bolts",
+      "stock": 1000,
+      "alert": 100
     }
   ],
   "products": {},
@@ -84,6 +89,14 @@
     },
     {
       "Time": "2026-03-11 11:08 PM",
+      "Part": "Bolts",
+      "Previous Stock": 0,
+      "Change": 1000,
+      "New Stock": 1000,
+      "Reason": "Part Created"
+    },
+    {
+      "Time": "2026-03-11 11:09 PM",
       "Part": "Bolts",
       "Previous Stock": 0,
       "Change": 1000,
