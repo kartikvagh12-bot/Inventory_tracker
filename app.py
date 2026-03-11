@@ -11,6 +11,19 @@ import base64
 # UI STYLE
 # -----------------------
 
+st.markdown("""
+<style>
+
+div[data-testid="stMetric"] {
+    background-color: #f8f9fa;
+    border: 1px solid #e6e6e6;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
 DATA_FILE = "data.json"
 
 GITHUB_TOKEN = st.secrets["GITHUB_TOKEN"]
