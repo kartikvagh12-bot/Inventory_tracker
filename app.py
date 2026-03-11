@@ -138,6 +138,20 @@ total_products = len(st.session_state.products)
 total_runs = len(st.session_state.production_log)
 
 # -----------------------
+# DASHBOARD PANELS
+# -----------------------
+
+st.subheader("📊 Dashboard")
+
+col1, col2, col3 = st.columns(3)
+
+col1.metric("Total Parts", total_parts)
+col2.metric("Products", total_products)
+col3.metric("Production Runs", total_runs)
+
+st.divider()
+
+# -----------------------
 # TODAY PRODUCTION SUMMARY
 # -----------------------
 
