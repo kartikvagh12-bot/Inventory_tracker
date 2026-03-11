@@ -4,6 +4,11 @@
       "name": "Seat",
       "stock": 100,
       "alert": 20
+    },
+    {
+      "name": "Back support",
+      "stock": 100,
+      "alert": 20
     }
   ],
   "products": {},
@@ -20,6 +25,14 @@
     {
       "Time": "2026-03-12 12:46 AM",
       "Part": "Seat",
+      "Previous Stock": 0,
+      "Change": 100,
+      "New Stock": 100,
+      "Reason": "Part Created"
+    },
+    {
+      "Time": "2026-03-12 12:46 AM",
+      "Part": "Back support",
       "Previous Stock": 0,
       "Change": 100,
       "New Stock": 100,
