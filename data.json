@@ -91,6 +91,12 @@
         "part": "Bolts",
         "qty": 20
       }
+    ],
+    "Table": [
+      {
+        "part": "Table top",
+        "qty": 1
+      }
     ]
   },
   "production_log": [
