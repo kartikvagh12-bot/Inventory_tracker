@@ -15,10 +15,11 @@ st.markdown("""
 <style>
 
 div[data-testid="stMetric"] {
-    background-color: #f8f9fa;
     border: 1px solid #e6e6e6;
-    padding: 20px;
+    padding: 15px;
     border-radius: 10px;
+    background-color: rgba(255,255,255,0.03);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
 </style>
