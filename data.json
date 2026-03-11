@@ -39,11 +39,6 @@
       "name": "Chair",
       "stock": 0,
       "alert": 0
-    },
-    {
-      "name": "Valve01",
-      "stock": 100,
-      "alert": 10
     }
   ],
   "products": {
