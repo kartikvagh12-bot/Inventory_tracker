@@ -12,7 +12,7 @@
     },
     {
       "name": "Arm rest",
-      "stock": 100,
+      "stock": 150,
       "alert": 40
     },
     {
@@ -338,6 +338,14 @@
       "Part": "Seat",
       "Previous Stock": 200,
       "Change": -50,
+      "New Stock": 150,
+      "Reason": "Manual Adjustment"
+    },
+    {
+      "Time": "2026-03-11 11:31 PM",
+      "Part": "Arm rest",
+      "Previous Stock": 100,
+      "Change": 50,
       "New Stock": 150,
       "Reason": "Manual Adjustment"
     }
