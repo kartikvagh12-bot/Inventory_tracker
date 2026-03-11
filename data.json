@@ -9,6 +9,11 @@
       "name": "Back support",
       "stock": 100,
       "alert": 20
+    },
+    {
+      "name": "Aem rest",
+      "stock": 200,
+      "alert": 40
     }
   ],
   "products": {},
@@ -28,6 +33,14 @@
       "Previous Stock": 0,
       "Change": 100,
       "New Stock": 100,
+      "Reason": "Part Created"
+    },
+    {
+      "Time": "2026-03-11 09:16 PM",
+      "Part": "Aem rest",
+      "Previous Stock": 0,
+      "Change": 200,
+      "New Stock": 200,
       "Reason": "Part Created"
     }
   ]
