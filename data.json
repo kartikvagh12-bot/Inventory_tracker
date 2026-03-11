@@ -37,7 +37,7 @@
     },
     {
       "name": "Chair",
-      "stock": 0,
+      "stock": 10,
       "alert": 0
     }
   ],
@@ -467,6 +467,14 @@
       "Previous Stock": 40,
       "Change": 1,
       "New Stock": 41,
+      "Reason": "Stock Added"
+    },
+    {
+      "Time": "2026-03-11 08:07 PM",
+      "Part": "Chair",
+      "Previous Stock": 0,
+      "Change": 10,
+      "New Stock": 10,
       "Reason": "Stock Added"
     }
   ]
