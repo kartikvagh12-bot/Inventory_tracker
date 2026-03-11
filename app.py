@@ -665,8 +665,6 @@ if menu == "Inventory":
         save_data()
     
         st.success("Inventory updated")
-    
-        st.rerun()
 
 
 # -----------------------
