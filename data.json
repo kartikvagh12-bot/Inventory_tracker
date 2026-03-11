@@ -52,7 +52,7 @@
     },
     {
       "name": "Table legs",
-      "stock": 100,
+      "stock": 400,
       "alert": 20
     },
     {
@@ -560,6 +560,14 @@
       "Change": 400,
       "New Stock": 400,
       "Reason": "Part Created"
+    },
+    {
+      "Time": "2026-03-11 08:52 PM",
+      "Part": "Table legs",
+      "Previous Stock": 100,
+      "Change": 300,
+      "New Stock": 400,
+      "Reason": "Manual Adjustment"
     }
   ]
 }
