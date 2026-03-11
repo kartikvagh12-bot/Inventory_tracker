@@ -7,27 +7,24 @@ from zoneinfo import ZoneInfo
 import requests
 import base64
 
+# -----------------------
+# UI STYLE
+# -----------------------
+
 st.markdown("""
 <style>
 
-.stApp {
-    background-color: #000080;
-}
-
-h1, h2, h3 {
-    color: #f8fafc;
-}
-
-div[data-testid="stMetric"] {
-    background-color: #000000;
-    padding: 15px;
-    border-radius: 10px;
-}
-
+/* Normal buttons */
 .stButton button {
     background-color: #22c55e;
     color: white;
     border-radius: 8px;
+}
+
+/* Delete buttons */
+button[kind="secondary"] {
+    background-color: #ef4444 !important;
+    color: white !important;
 }
 
 </style>
