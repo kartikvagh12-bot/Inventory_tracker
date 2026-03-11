@@ -32,7 +32,7 @@
     },
     {
       "name": "Bolts",
-      "stock": 0,
+      "stock": 2000,
       "alert": 100
     }
   ],
@@ -316,6 +316,14 @@
       "Change": -150,
       "New Stock": 150,
       "Reason": "Production: Chair"
+    },
+    {
+      "Time": "2026-03-11 11:23 PM",
+      "Part": "Bolts",
+      "Previous Stock": 0,
+      "Change": 2000,
+      "New Stock": 2000,
+      "Reason": "Stock Added"
     }
   ]
 }
