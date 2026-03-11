@@ -651,8 +651,8 @@ if menu == "Inventory History":
 
     else:
 
-        df = pd.DataFrame(st.session_state.inventory_log).sort_values("Time", ascending=False)
-
+        df = pd.DataFrame(st.session_state.inventory_log)
+        df = df.sort_values("Time", ascending=False).reset_index(drop=True)
         df.index += 1
 
         st.dataframe(df, use_container_width=True)
@@ -695,8 +695,8 @@ if menu == "Production History":
                 "Time": item["time"]
             })
         
-        df = pd.DataFrame(history).sort_values("Time", ascending=False)
-
+        df = pd.DataFrame(history)
+        df = df.sort_values("Time", ascending=False).reset_index(drop=True)
         df.index += 1
 
         st.dataframe(df, use_container_width=True)
