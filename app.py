@@ -7,32 +7,6 @@ from zoneinfo import ZoneInfo
 import requests
 import base64
 
-st.markdown("""
-<style>
-
-.stApp {
-    background-color: #000000;
-}
-
-h1, h2, h3 {
-    color: #f8fafc;
-}
-
-div[data-testid="stMetric"] {
-    background-color: #1e293b;
-    padding: 15px;
-    border-radius: 10px;
-}
-
-.stButton button {
-    background-color: #22c55e;
-    color: white;
-    border-radius: 8px;
-}
-
-</style>
-""", unsafe_allow_html=True)
-
 DATA_FILE = "data.json"
 
 GITHUB_TOKEN = st.secrets["GITHUB_TOKEN"]
@@ -226,13 +200,13 @@ if st.sidebar.button("Reset All Data"):
 menu = st.sidebar.radio(
     "Menu",
     [
-        "📦 Add Parts",
-        "➕ Add Stock",
-        "🏭 Create Product",
-        "⚙ Run Production",
-        "📊 Inventory",
-        "📜 Inventory History",
-        "🏭 Production History"
+        "Add Parts",
+        "Add Stock",
+        "Create Product",
+        "Run Production",
+        "Inventory",
+        "Inventory History",
+        "Production History"
     ]
 )
 
