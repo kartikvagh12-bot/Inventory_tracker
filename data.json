@@ -54,6 +54,11 @@
       "name": "Table legs",
       "stock": 100,
       "alert": 20
+    },
+    {
+      "name": "Table foot cap",
+      "stock": 400,
+      "alert": 40
     }
   ],
   "products": {
@@ -546,6 +551,14 @@
       "Previous Stock": 0,
       "Change": 100,
       "New Stock": 100,
+      "Reason": "Part Created"
+    },
+    {
+      "Time": "2026-03-11 08:51 PM",
+      "Part": "Table foot cap",
+      "Previous Stock": 0,
+      "Change": 400,
+      "New Stock": 400,
       "Reason": "Part Created"
     }
   ]
