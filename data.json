@@ -39,6 +39,11 @@
       "name": "Chair",
       "stock": 0,
       "alert": 0
+    },
+    {
+      "name": "Valve01",
+      "stock": 100,
+      "alert": 10
     }
   ],
   "products": {
@@ -427,6 +432,14 @@
       "Previous Stock": 0,
       "Change": 0,
       "New Stock": 0,
+      "Reason": "Part Created"
+    },
+    {
+      "Time": "2026-03-11 05:47 PM",
+      "Part": "Valve01",
+      "Previous Stock": 0,
+      "Change": 100,
+      "New Stock": 100,
       "Reason": "Part Created"
     }
   ]
