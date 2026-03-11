@@ -36,7 +36,14 @@
       "alert": 100
     }
   ],
-  "products": {},
+  "products": {
+    "Chair": [
+      {
+        "part": "Arm rest",
+        "qty": 2
+      }
+    ]
+  },
   "production_log": [],
   "inventory_log": [
     {
