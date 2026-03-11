@@ -580,7 +580,14 @@ if menu == "Inventory":
 
     st.header("Inventory Dashboard")
 
-    df = pd.DataFrame(st.session_state.parts).sort_values("name").reset_index(drop=True)
+    df = pd.DataFrame(st.session_state.parts)
+
+    if df.empty:
+        st.info("No parts available")
+    else:
+        df = df.sort_values("name").reset_index(drop=True)
+        df.index += 1
+        st.dataframe(df, use_container_width=True)
 
     df.index += 1
 
