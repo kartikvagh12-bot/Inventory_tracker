@@ -49,6 +49,10 @@
       {
         "part": "Bolts",
         "qty": 20
+      },
+      {
+        "part": "Centre stand",
+        "qty": 1
       }
     ]
   },
