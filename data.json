@@ -12,7 +12,7 @@
     },
     {
       "name": "Arm rest",
-      "stock": 40,
+      "stock": 300,
       "alert": 40
     },
     {
@@ -589,6 +589,14 @@
       "Change": -100,
       "New Stock": 100,
       "Reason": "Production: Chair"
+    },
+    {
+      "Time": "2026-03-12 08:58 PM",
+      "Part": "Arm rest",
+      "Previous Stock": 40,
+      "Change": 260,
+      "New Stock": 300,
+      "Reason": "Manual Adjustment"
     }
   ]
 }
