@@ -36,7 +36,14 @@
       "alert": 100
     }
   ],
-  "products": {},
+  "products": {
+    "Office Chair": [
+      {
+        "part": "Arm rest",
+        "qty": 1
+      }
+    ]
+  },
   "production_log": [],
   "inventory_log": [
     {
