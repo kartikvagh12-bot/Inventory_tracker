@@ -53,6 +53,10 @@
       {
         "part": "Centre stand",
         "qty": 1
+      },
+      {
+        "part": "Seat",
+        "qty": 1
       }
     ]
   },
