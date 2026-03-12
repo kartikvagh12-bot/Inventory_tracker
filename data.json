@@ -24,6 +24,11 @@
       "name": "Wheel arms",
       "stock": 500,
       "alert": 50
+    },
+    {
+      "name": "Centre stand",
+      "stock": 100,
+      "alert": 20
     }
   ],
   "products": {},
@@ -67,6 +72,14 @@
       "Previous Stock": 0,
       "Change": 500,
       "New Stock": 500,
+      "Reason": "Part Created"
+    },
+    {
+      "Time": "2026-03-13 12:34 AM",
+      "Part": "Centre stand",
+      "Previous Stock": 0,
+      "Change": 100,
+      "New Stock": 100,
       "Reason": "Part Created"
     }
   ]
