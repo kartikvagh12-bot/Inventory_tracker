@@ -1,6 +1,21 @@
 {
-  "parts": [],
+  "parts": [
+    {
+      "name": "Seat",
+      "stock": 100,
+      "alert": 20
+    }
+  ],
   "products": {},
   "production_log": [],
-  "inventory_log": []
+  "inventory_log": [
+    {
+      "Time": "2026-03-13 12:32 AM",
+      "Part": "Seat",
+      "Previous Stock": 0,
+      "Change": 100,
+      "New Stock": 100,
+      "Reason": "Part Created"
+    }
+  ]
 }
