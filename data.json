@@ -2,37 +2,37 @@
   "parts": [
     {
       "name": "Seat",
-      "stock": 100,
+      "stock": 80,
       "alert": 20
     },
     {
       "name": "Back Support",
-      "stock": 100,
+      "stock": 80,
       "alert": 20
     },
     {
       "name": "Arm rest",
-      "stock": 200,
+      "stock": 160,
       "alert": 40
     },
     {
       "name": "Wheels",
-      "stock": 500,
+      "stock": 400,
       "alert": 50
     },
     {
       "name": "Wheel arms",
-      "stock": 500,
+      "stock": 400,
       "alert": 50
     },
     {
       "name": "Centre stand",
-      "stock": 100,
+      "stock": 80,
       "alert": 20
     },
     {
       "name": "Bolts",
-      "stock": 1000,
+      "stock": 500,
       "alert": 100
     }
   ],
@@ -68,7 +68,43 @@
       }
     ]
   },
-  "production_log": [],
+  "production_log": [
+    {
+      "product": "Office Chair",
+      "qty": 20,
+      "time": "2026-03-13 12:36 AM",
+      "parts_used": [
+        {
+          "part": "Arm rest",
+          "qty": 40
+        },
+        {
+          "part": "Back Support",
+          "qty": 20
+        },
+        {
+          "part": "Bolts",
+          "qty": 500
+        },
+        {
+          "part": "Centre stand",
+          "qty": 20
+        },
+        {
+          "part": "Seat",
+          "qty": 20
+        },
+        {
+          "part": "Wheel arms",
+          "qty": 100
+        },
+        {
+          "part": "Wheels",
+          "qty": 100
+        }
+      ]
+    }
+  ],
   "inventory_log": [
     {
       "Time": "2026-03-13 12:32 AM",
@@ -125,6 +161,62 @@
       "Change": 1000,
       "New Stock": 1000,
       "Reason": "Part Created"
+    },
+    {
+      "Time": "2026-03-13 12:36 AM",
+      "Part": "Arm rest",
+      "Previous Stock": 200,
+      "Change": -40,
+      "New Stock": 160,
+      "Reason": "Production: Office Chair"
+    },
+    {
+      "Time": "2026-03-13 12:36 AM",
+      "Part": "Back Support",
+      "Previous Stock": 100,
+      "Change": -20,
+      "New Stock": 80,
+      "Reason": "Production: Office Chair"
+    },
+    {
+      "Time": "2026-03-13 12:36 AM",
+      "Part": "Bolts",
+      "Previous Stock": 1000,
+      "Change": -500,
+      "New Stock": 500,
+      "Reason": "Production: Office Chair"
+    },
+    {
+      "Time": "2026-03-13 12:36 AM",
+      "Part": "Centre stand",
+      "Previous Stock": 100,
+      "Change": -20,
+      "New Stock": 80,
+      "Reason": "Production: Office Chair"
+    },
+    {
+      "Time": "2026-03-13 12:36 AM",
+      "Part": "Seat",
+      "Previous Stock": 100,
+      "Change": -20,
+      "New Stock": 80,
+      "Reason": "Production: Office Chair"
+    },
+    {
+      "Time": "2026-03-13 12:36 AM",
+      "Part": "Wheel arms",
+      "Previous Stock": 500,
+      "Change": -100,
+      "New Stock": 400,
+      "Reason": "Production: Office Chair"
+    },
+    {
+      "Time": "2026-03-13 12:36 AM",
+      "Part": "Wheels",
+      "Previous Stock": 500,
+      "Change": -100,
+      "New Stock": 400,
+      "Reason": "Production: Office Chair"
     }
   ]
 }
