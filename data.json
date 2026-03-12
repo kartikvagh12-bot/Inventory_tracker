@@ -13,7 +13,7 @@
     {
       "name": "Arm rest",
       "stock": 20,
-      "alert": 40
+      "alert": 10
     },
     {
       "name": "Wheels",
@@ -613,6 +613,14 @@
       "Change": -375,
       "New Stock": 1125,
       "Reason": "Production: Chair"
+    },
+    {
+      "Time": "2026-03-12 04:31 PM",
+      "Part": "Arm rest",
+      "Previous Stock": 20,
+      "Change": 0,
+      "New Stock": 20,
+      "Reason": "Manual Adjustment"
     }
   ]
 }
