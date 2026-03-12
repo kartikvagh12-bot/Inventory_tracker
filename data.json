@@ -57,6 +57,10 @@
       {
         "part": "Seat",
         "qty": 1
+      },
+      {
+        "part": "Wheel arms",
+        "qty": 5
       }
     ]
   },
