@@ -19,6 +19,11 @@
       "name": "Wheels",
       "stock": 400,
       "alert": 40
+    },
+    {
+      "name": "Wheel Arms",
+      "stock": 400,
+      "alert": 40
     }
   ],
   "products": {},
@@ -51,6 +56,14 @@
     {
       "Time": "2026-03-12 04:14 PM",
       "Part": "Wheels",
+      "Previous Stock": 0,
+      "Change": 400,
+      "New Stock": 400,
+      "Reason": "Part Created"
+    },
+    {
+      "Time": "2026-03-12 04:14 PM",
+      "Part": "Wheel Arms",
       "Previous Stock": 0,
       "Change": 400,
       "New Stock": 400,
