@@ -14,6 +14,11 @@
       "name": "Arm rest",
       "stock": 200,
       "alert": 40
+    },
+    {
+      "name": "Wheels",
+      "stock": 400,
+      "alert": 40
     }
   ],
   "products": {},
@@ -41,6 +46,14 @@
       "Previous Stock": 0,
       "Change": 200,
       "New Stock": 200,
+      "Reason": "Part Created"
+    },
+    {
+      "Time": "2026-03-12 04:14 PM",
+      "Part": "Wheels",
+      "Previous Stock": 0,
+      "Change": 400,
+      "New Stock": 400,
       "Reason": "Part Created"
     }
   ]
